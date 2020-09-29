@@ -14,6 +14,6 @@ public class Controller {
   }
 
   public List<PlaceLocation> findPlaces(String searchTerm) {
-    return Arrays.asList(new PlaceLocation("No implementado"));
+    return Arrays.asList(new PlaceLocation("No implementado",0, 0));
   }
 }
