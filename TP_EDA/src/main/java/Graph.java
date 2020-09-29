@@ -27,11 +27,11 @@ final static int NO_PARENT = -3;
         nodes.values().forEach(Node::unmark);
     }
 
-    public Map<String,Integer> getSmallerDistance(int startId, int endId) {
+    public Map<Integer,Integer> getSmallerDistance(int startId, int endId) {
         unmarkAllNodes();
         nodes.values().forEach(node -> node.cost = Double.MAX_VALUE);
         PriorityQueue<PqNode> queue = new PriorityQueue<>();
-        Map<String, Integer> parents = new HashMap<>();
+        Map<Integer, Integer> parents = new HashMap<>();
 
         queue.add(new PqNode(nodes.get(startId), 0)); //agrego primer nodo
         PqNode pqNode = new PqNode(nodes.get(startId), 0);
@@ -46,12 +46,35 @@ final static int NO_PARENT = -3;
                 if (targetNodeCost < edge.targetNode.cost) {
                     edge.targetNode.cost = targetNodeCost;
                     queue.add(new PqNode(edge.targetNode, targetNodeCost));
-                    parents.put(edge.targetNode.name, pqNode.node.id);
+                    if(Objects.equals(edge.targetNode.name, pqNode.node.name)){
+                        parents.put(edge.targetNode.id, parents.get(pqNode.node.id));
+                    }else
+                        parents.put(edge.targetNode.id, pqNode.node.id);
+
                 }
             }
         }
 
         return parents;
+    }
+
+
+
+    public List<String> answer(int idStart, int idEnd){
+        Map<Integer, Integer> ans = getSmallerDistance(idStart, idEnd);
+        List<String> result = new ArrayList<>();
+        int target =ans.get(idEnd);
+        boolean found = false;
+        while(!found){
+            result.add(nodes.get(ans.get(target)).name);
+            if(target == idStart)
+                found = true;
+
+            target = ans.get(target);
+        }
+
+        return result;
+
     }
     class Node {
         int id;
