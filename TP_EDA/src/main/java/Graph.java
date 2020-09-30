@@ -10,8 +10,17 @@ final static int NO_PARENT = -3;
         nodes = new HashMap<>();
     }
 
-    void addNode(int id, String name, double lat, double lng) {
-        nodes.putIfAbsent(id, new Node(id, name, lat, lng));
+    public int size(){
+        return nodes.size();
+    }
+
+
+    public Collection<Node> nodes(){
+        return nodes.values();
+    }
+    Node addNode(int id, String name, double lat, double lng) {
+
+        return nodes.putIfAbsent(id, new Node(id, name, lat, lng));
     }
 
     void addEdge(int id1, int id2, double weight) {
@@ -35,6 +44,7 @@ final static int NO_PARENT = -3;
         Map<Integer, Integer> parents = new HashMap<>();
 
         queue.add(new PqNode(nodes.get(startId), 0)); //agrego primer nodo
+        parents.put(startId, NO_PARENT);
         PqNode pqNode = new PqNode(nodes.get(startId), 0);
         while (!queue.isEmpty() && pqNode.node.id != endId) {
             pqNode = queue.remove();
@@ -47,10 +57,7 @@ final static int NO_PARENT = -3;
                 if (targetNodeCost < edge.targetNode.cost) {
                     edge.targetNode.cost = targetNodeCost;
                     queue.add(new PqNode(edge.targetNode, targetNodeCost));
-                    if(Objects.equals(edge.targetNode.name, pqNode.node.name)){
-                        parents.put(edge.targetNode.id, parents.get(pqNode.node.id));
-                    }else
-                        parents.put(edge.targetNode.id, pqNode.node.id);
+                    parents.put(edge.targetNode.id, pqNode.node.id);
 
                 }
             }
@@ -90,7 +97,7 @@ final static int NO_PARENT = -3;
             this.lng = lng;
             this.lat = lat;
             this.name = name;
-            this.id = id; //PREGUNTAR LO DE ID
+            this.id = id;
             edges = new HashSet<>();
         }
 
