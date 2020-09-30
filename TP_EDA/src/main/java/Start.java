@@ -1,9 +1,17 @@
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
 import static spark.Spark.*;
 import static utils.Json.json;
 
 public class Start {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     Controller controller = new Controller();
     cors();
     after((req, res) -> res.type("application/json"));
@@ -18,6 +26,34 @@ public class Start {
       String searchTerm = req.queryParams("searchTerm");
       return controller.findPlaces(searchTerm);
     }, json());
+
+
+    /*String bus= "paradas-de-colectivo.csv";
+    InputStream is = Start.class.getClass().getResourceAsStream(bus);
+    Reader in = new InputStreamReader(is);
+    Iterable<CSVRecord> records = CSVFormat.DEFAULT
+            .withFirstRecordAsHeader()
+            .parse(in);
+
+    Graph graph = new Graph();
+    //IndexService<IdxRecord<Double, CSVRecord>> data = new IndexWithDuplicates<>();
+
+
+     */
+    String places= "/espacios-culturales.csv";
+    InputStream is = Start.class.getClass().getResourceAsStream(places);
+    Reader in = new InputStreamReader(is);
+    Iterable<CSVRecord> records = CSVFormat.DEFAULT
+            .withFirstRecordAsHeader()
+            .parse(in);
+
+    IndexService<IdxRecord<Double, CSVRecord>> data = new IndexWithDuplicates<>();
+    for (CSVRecord record : records) {
+      data.insert(new IdxRecord(String.valueOf(record.get("establecimiento")), record));
+    }
+
+    System.out.println(data.getMin());
+
   }
 
   public static void cors() {
