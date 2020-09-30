@@ -1,3 +1,5 @@
+package model;
+
 public interface IndexService<T extends Comparable> {
 
     // elements serán los valores del índice, los anteriores se descartan.

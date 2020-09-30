@@ -1,6 +1,6 @@
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-
+import model.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

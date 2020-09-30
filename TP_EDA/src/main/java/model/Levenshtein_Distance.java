@@ -1,4 +1,6 @@
-public class LevenshteinDistance {
+package model;
+
+public class Levenshtein_Distance {
 
     public int distance(String str1, String str2){
         int lenght1= str1.length();

@@ -7,7 +7,7 @@ public class BusInPath {
   public final double toLat;
   public final double toLng;
 
-  public BusInPath(String name, double fromLat, double fromLng, double toLat, double toLng) {
+  public BusInPath(String name, double fromLat, double fromLng, double toLat, double toLng) { //devolver un colectivo y el recorrido
     this.name = name;
     this.fromLat = fromLat;
     this.fromLng = fromLng;

@@ -1,4 +1,4 @@
-
+package model;
 
 public class IdxRecord<T1 extends Comparable<T1>, T2> implements Comparable<IdxRecord<T1, T2>>{
 

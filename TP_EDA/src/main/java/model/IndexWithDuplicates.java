@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
@@ -19,6 +21,10 @@ public class IndexWithDuplicates <T extends Comparable> implements IndexService<
         this.elements = elements;
         Arrays.sort(elements);
         dim = 0;
+    }
+
+    public T[] idex(){
+        return elements;
     }
     @Override
     public void initialize(T[] elements) {
@@ -86,6 +92,7 @@ public class IndexWithDuplicates <T extends Comparable> implements IndexService<
     public boolean search(T key){
         if(dim == 0)
             return false;
+
         int index = getClosetPosition(key);
         if(index > dim - 1)
             return false;
@@ -113,6 +120,7 @@ public class IndexWithDuplicates <T extends Comparable> implements IndexService<
         }
     }
 */
+
     public void insert(T key){
 
         if (dim == 0) {
@@ -140,7 +148,7 @@ public class IndexWithDuplicates <T extends Comparable> implements IndexService<
 
         while (left <= right) {
             int mid= (left + right) / 2;
-            if ( elements[ mid ].compareTo(key) == 0 )
+            if ( elements[ mid ].compareTo(key) == 0 ) //HACER LEVENSHTEIN
                 return mid;
             if ( key.compareTo(elements[mid]) < 0)
                 right = mid  - 1;

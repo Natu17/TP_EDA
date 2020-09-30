@@ -21,6 +21,7 @@ final static int NO_PARENT = -3;
             return;
         }
         node1.edges.add(new Edge(node2, weight));
+        node2.edges.add(new Edge(node1, weight));
     }
 
     private void unmarkAllNodes() {
