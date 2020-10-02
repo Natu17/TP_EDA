@@ -22,10 +22,6 @@ public class Start {
       double toLng = Double.parseDouble(req.queryParams("toLng"));
       return controller.findPath(fromLat, fromLng, toLat, toLng);
     }, json());
-    get("/place", (req, res) -> {
-      String searchTerm = req.queryParams("searchTerm");
-      return controller.findPlaces(searchTerm);
-    }, json());
 
 
     String bus= "/paradas-de-colectivo.csv";
@@ -35,31 +31,12 @@ public class Start {
             .withFirstRecordAsHeader()
             .parse(in);
 
-    //Graph graph = new Graph();
-    IndexService<IdxRecord<Double, CSVRecord>> dataCol = new IndexWithDuplicates<>();
-    for (CSVRecord record : recordsBus) {
-      dataCol.insert(new IdxRecord(String.valueOf(record.get("stop_id")), record));
-    }
-    System.out.println(dataCol.getMin());
-
-
-
     String sub= "/estaciones-de-subte.csv";
     InputStream isSub = Start.class.getClass().getResourceAsStream(sub);
     Reader inSub = new InputStreamReader(isSub);
     Iterable<CSVRecord> recordsSub = CSVFormat.DEFAULT
             .withFirstRecordAsHeader()
             .parse(inSub);
-
-    //Graph graph = new Graph();
-    IndexService<IdxRecord<Double, CSVRecord>> dataSub = new IndexWithDuplicates<>();
-    for (CSVRecord record : recordsSub) {
-      dataSub.insert(new IdxRecord(String.valueOf(record.get("id")), record));
-    }
-    System.out.println(dataSub.getMin());
-
-
-
 
 
     String places= "/espacios-culturales.csv";
@@ -69,11 +46,18 @@ public class Start {
             .withFirstRecordAsHeader()
             .parse(inEsp);
 
-    IndexService<IdxRecord<Double, CSVRecord>> dataEsp = new IndexWithDuplicates<>();
+    Index dataEsp = new Index();
     for (CSVRecord record : recordsEsp) {
-      dataEsp.insert(new IdxRecord(String.valueOf(record.get("establecimiento")), record));
+      dataEsp.put(String.valueOf(record.get("establecimiento")), record);
     }
-    System.out.println(dataEsp.getMin());
+
+    get("/place", (req, res) -> {
+      String searchTerm = req.queryParams("searchTerm");
+      return controller.findPlaces(searchTerm, dataEsp);
+    }, json());
+
+
+
   }
 
 

@@ -20,20 +20,6 @@ public class PlaceLocation {
   }
 
 
-  public List<String> levenshtein(String str, String elements[]){
-    Levenshtein_Distance lev = new Levenshtein_Distance();
-    List<String> results = new ArrayList<>();
-    for(int i = 0; i< elements.length - 1; i++){
-      String str2 = elements[i];
-
-      if(lev.normalizedSimilarity(str,str2) >= 0.8){
-        results.add(str2);
-      }
-    }
-    results.sort(Comparator.reverseOrder());
-    return results;
-  }
-
   public double getLat() {
     return lat;
   }
