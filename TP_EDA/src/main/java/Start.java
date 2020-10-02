@@ -28,33 +28,55 @@ public class Start {
     }, json());
 
 
-    /*String bus= "paradas-de-colectivo.csv";
+    String bus= "/paradas-de-colectivo.csv";
     InputStream is = Start.class.getClass().getResourceAsStream(bus);
     Reader in = new InputStreamReader(is);
-    Iterable<CSVRecord> records = CSVFormat.DEFAULT
+    Iterable<CSVRecord> recordsBus = CSVFormat.DEFAULT
             .withFirstRecordAsHeader()
             .parse(in);
 
-    Graph graph = new Graph();
-    //IndexService<IdxRecord<Double, CSVRecord>> data = new IndexWithDuplicates<>();
-
-
-     */
-    String places= "/espacios-culturales.csv";
-    InputStream is = Start.class.getClass().getResourceAsStream(places);
-    Reader in = new InputStreamReader(is);
-    Iterable<CSVRecord> records = CSVFormat.DEFAULT
-            .withFirstRecordAsHeader()
-            .parse(in);
-
-    IndexService<IdxRecord<Double, CSVRecord>> data = new IndexWithDuplicates<>();
-    for (CSVRecord record : records) {
-      data.insert(new IdxRecord(String.valueOf(record.get("establecimiento")), record));
+    //Graph graph = new Graph();
+    IndexService<IdxRecord<Double, CSVRecord>> dataCol = new IndexWithDuplicates<>();
+    for (CSVRecord record : recordsBus) {
+      dataCol.insert(new IdxRecord(String.valueOf(record.get("stop_id")), record));
     }
+    System.out.println(dataCol.getMin());
 
-    System.out.println(data.getMin());
 
+
+    String sub= "/estaciones-de-subte.csv";
+    InputStream isSub = Start.class.getClass().getResourceAsStream(sub);
+    Reader inSub = new InputStreamReader(isSub);
+    Iterable<CSVRecord> recordsSub = CSVFormat.DEFAULT
+            .withFirstRecordAsHeader()
+            .parse(inSub);
+
+    //Graph graph = new Graph();
+    IndexService<IdxRecord<Double, CSVRecord>> dataSub = new IndexWithDuplicates<>();
+    for (CSVRecord record : recordsSub) {
+      dataSub.insert(new IdxRecord(String.valueOf(record.get("id")), record));
+    }
+    System.out.println(dataSub.getMin());
+
+
+
+
+
+    String places= "/espacios-culturales.csv";
+    InputStream isEsp = Start.class.getClass().getResourceAsStream(places);
+    Reader inEsp = new InputStreamReader(isEsp);
+    Iterable<CSVRecord> recordsEsp = CSVFormat.DEFAULT
+            .withFirstRecordAsHeader()
+            .parse(inEsp);
+
+    IndexService<IdxRecord<Double, CSVRecord>> dataEsp = new IndexWithDuplicates<>();
+    for (CSVRecord record : recordsEsp) {
+      dataEsp.insert(new IdxRecord(String.valueOf(record.get("establecimiento")), record));
+    }
+    System.out.println(dataEsp.getMin());
   }
+
+
 
   public static void cors() {
     before((req, res) -> {
