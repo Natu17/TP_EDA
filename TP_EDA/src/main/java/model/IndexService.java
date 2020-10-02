@@ -1,6 +1,6 @@
 package model;
 
-public interface IndexService<T extends Comparable> {
+public interface IndexService<T  extends Comparable<? super T>> {
 
     // elements serán los valores del índice, los anteriores se descartan.
     // lanza excepction si elements is null y deja los valores anteriores.
@@ -22,6 +22,7 @@ public interface IndexService<T extends Comparable> {
     T getMax();
     T getMin();
 
+    public T[] index();
 
     void sortedPrint();
 

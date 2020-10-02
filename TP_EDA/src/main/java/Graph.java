@@ -41,12 +41,12 @@ final static int NO_PARENT = -3;
         unmarkAllNodes();
         nodes.values().forEach(node -> node.cost = Double.MAX_VALUE);
         PriorityQueue<PqNode> queue = new PriorityQueue<>();
-        Map<Integer, Integer> parents = new HashMap<>();
+        Map<Integer, Integer> parents = new HashMap<>(); //mapa de id a id de su parent
 
         queue.add(new PqNode(nodes.get(startId), 0)); //agrego primer nodo
         parents.put(startId, NO_PARENT);
         PqNode pqNode = new PqNode(nodes.get(startId), 0);
-        while (!queue.isEmpty() && pqNode.node.id != endId) {
+        while (!queue.isEmpty() && pqNode.node.id != endId) { //ESTOY HACIENDO UN WHILE DE MAS
             pqNode = queue.remove();
             if (pqNode.node.marked) continue;
             pqNode.node.mark();
@@ -54,10 +54,18 @@ final static int NO_PARENT = -3;
 
             for (Edge edge : pqNode.node.edges) {
                 double targetNodeCost = pqNode.cost + edge.weight;
-                if (targetNodeCost < edge.targetNode.cost) {
+                if (targetNodeCost <   edge.targetNode.cost) {
                     edge.targetNode.cost = targetNodeCost;
                     queue.add(new PqNode(edge.targetNode, targetNodeCost));
-                    parents.put(edge.targetNode.id, pqNode.node.id);
+                    if(pqNode.node.id == startId){
+                        parents.put(edge.targetNode.id, pqNode.node.id);
+                    }else {
+
+
+                        if (!(((pqNode.node.name).compareTo(edge.targetNode.name)) == 0 && (edge.targetNode.name).compareTo(nodes.get(parents.get(pqNode.node.id)).name) == 0)) {
+                            parents.put(edge.targetNode.id, pqNode.node.id);
+                        }
+                    }
 
                 }
             }
@@ -71,14 +79,17 @@ final static int NO_PARENT = -3;
     public List<String> answer(int idStart, int idEnd){
         Map<Integer, Integer> ans = getSmallerDistance(idStart, idEnd);
         List<String> result = new ArrayList<>();
-        int target =ans.get(idEnd);
+        int target =idEnd;
+        result.add(nodes.get(idEnd).name);
         boolean found = false;
         while(!found){
-            result.add(nodes.get(ans.get(target)).name);
+
             if(target == idStart)
                 found = true;
-
-            target = ans.get(target);
+            else {
+                result.add(nodes.get(ans.get(target)).name);
+                target = ans.get(target);
+            }
         }
 
         return result;
@@ -87,6 +98,7 @@ final static int NO_PARENT = -3;
     class Node {
         int id;
         String name;
+        boolean direcction;
         Set<Edge> edges;
         double lat;
         double lng;

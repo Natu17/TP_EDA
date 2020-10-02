@@ -3,7 +3,7 @@ package model;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public class IndexWithDuplicates <T extends Comparable> implements IndexService<T> {
+public class IndexWithDuplicates <T extends Comparable<? super T>> implements IndexService<T> {
     final static private int STEP = 5;
     T[] elements;
     int dim;
@@ -23,9 +23,10 @@ public class IndexWithDuplicates <T extends Comparable> implements IndexService<
         dim = 0;
     }
 
-    public T[] idex(){
-        return elements;
+    public T[] index(){
+        return  elements;
     }
+
     @Override
     public void initialize(T[] elements) {
         if(elements == null)
