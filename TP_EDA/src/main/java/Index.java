@@ -5,9 +5,9 @@ import java.util.*;
 
 public class Index {
 
-    public int distance(String str1, String str2){
-        str1.toLowerCase();
-        str2.toLowerCase();
+    public int distance(String str1A, String str2A){
+        String str1 =str1A.toLowerCase();
+        String str2 =str2A.toLowerCase();
         int lenght1= str1.length();
         int lenght2 = str2.length();
         int[][] matrix = new int[lenght1][lenght2];
