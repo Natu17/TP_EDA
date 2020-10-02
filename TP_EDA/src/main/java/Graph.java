@@ -62,7 +62,10 @@ final static int NO_PARENT = -3;
                     }else {
 
 
-                        if (!(((pqNode.node.name).compareTo(edge.targetNode.name)) == 0 && (edge.targetNode.name).compareTo(nodes.get(parents.get(pqNode.node.id)).name) == 0)) {
+                        if (((pqNode.node.name).compareTo(edge.targetNode.name)) == 0 && (edge.targetNode.name).compareTo(nodes.get(parents.get(pqNode.node.id)).name) == 0) {
+                            parents.put(edge.targetNode.id, nodes.get(parents.get(pqNode.node.id)).id);
+                        }else
+                        {
                             parents.put(edge.targetNode.id, pqNode.node.id);
                         }
                     }
