@@ -29,8 +29,36 @@ public class Index {
     }
 
     public double normalizedSimilarity(String str1, String str2){
-        return (1 - (double)(distance(str1,str2))/Math.max(str1.length(),str2.length()));
+
+        return (1 - (double)(distance(str1.toLowerCase(),str2.toLowerCase()))/Math.max(str1.length(),str2.length()));
     }
+    public double similarytyWhite(String str1, String str2){
+        Scanner scanner1 = new Scanner(str1.toLowerCase());
+        Scanner scanner2 = new Scanner(str2.toLowerCase());
+        double distance = 0.0;
+        String str1A = str1;
+        String str2B = str2;
+        while (scanner1.hasNext() || scanner2.hasNext()){
+            if(!scanner1.hasNext()){
+                str2B = scanner2.next();
+                distance = Math.max(distance,normalizedSimilarity(str1A,str2B));
+            }else {
+                if (!scanner2.hasNext()) {
+                    str1A = scanner1.next();
+                    distance = Math.max(distance,normalizedSimilarity(str1A,str2B));
+
+                } else{
+                    str1A = scanner1.next();
+                    str2B = scanner2.next();
+                    distance = normalizedSimilarity(str1A,str2B);
+                }
+
+            }
+        }
+        return distance;
+    }
+
+
 
     SortedMap<String, CSVRecord> index;
     public Index() {
@@ -44,7 +72,8 @@ public class Index {
     public List<PlaceLocation> levenshtein(String str1){
         List<PlaceLocation> results = new ArrayList<>();
         for(Map.Entry<String,CSVRecord> entry: index.entrySet()){
-            if(normalizedSimilarity(str1,entry.getKey()) >= 0.5){
+            Double similarity = similarytyWhite(str1,entry.getKey());
+            if(similarity >= 0.8){
                 PlaceLocation placeLocation = new PlaceLocation(entry.getKey(), Double.valueOf(entry.getValue().get("latitud")), Double.valueOf(entry.getValue().get("longitud")));
                 results.add(placeLocation);
             }

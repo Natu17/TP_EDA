@@ -6,13 +6,12 @@ import java.util.List;
 
 
 public class PlaceLocation {
-
+  private double similarity;
   private double lat;
   private double lng;
   private String name;
 
   public PlaceLocation(String name, double lat, double lng) {
-
     this.name = name;
     this.lat = lat;
     this.lng = lng;
@@ -31,4 +30,6 @@ public class PlaceLocation {
   public String getName() {
     return name;
   }
+
+  public int compareTo(int similarity1){return Double.compare(similarity,similarity1);}
 }
