@@ -10,16 +10,27 @@ import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class Controller {
   Index dataEsp = new Index();
+  CreateMap map = new CreateMap();
+
+  final static long ID_START = -1;
+  final static  long ID_END = -2;
+  final static int DIRECTION_START = -3;
+  final static int DIRECTION_END = -4;
 
   public Controller() throws IOException {
+
     String bus= "/paradas-de-colectivo.csv";
     InputStream is = Start.class.getClass().getResourceAsStream(bus);
     Reader in = new InputStreamReader(is);
     Iterable<CSVRecord> recordsBus = CSVFormat.DEFAULT
             .withFirstRecordAsHeader()
             .parse(in);
+    for (CSVRecord record : recordsBus) {
+      map.addBusStation(record);
+    }
 
     String sub= "/estaciones-de-subte.csv";
     InputStream isSub = Start.class.getClass().getResourceAsStream(sub);
@@ -27,6 +38,9 @@ public class Controller {
     Iterable<CSVRecord> recordsSub = CSVFormat.DEFAULT
             .withFirstRecordAsHeader()
             .parse(inSub);
+    for (CSVRecord record : recordsSub) {
+      map.addSubwayStation(record);
+    }
 
 
     String places= "/espacios-culturales.csv";
@@ -43,8 +57,11 @@ public class Controller {
   }
 
   public List<BusInPath> findPath(double fromLat, double fromLng, double toLat, double toLng) {
+    map.addWalkingStation(ID_START,fromLat,fromLng,DIRECTION_START);
+    map.addWalkingStation(ID_END,toLat,toLng,DIRECTION_END);
+    Graph graph = map.getGraph();
+    return graph.answer(ID_START,ID_END);
 
-    return Arrays.asList(new BusInPath("No implementado", 0, 0, 0, 0));
   }
 
   public List<PlaceLocation> findPlaces(String searchTerm) {

@@ -7,7 +7,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GraphTest {
-
+/*
     Graph testGraph1 = new Graph();
     Graph testGraph2 = new Graph();
     Graph testGraph3 = new Graph();
@@ -165,4 +165,7 @@ class GraphTest {
             System.out.println(s);
         }
     }
+
+ */
+
 }
