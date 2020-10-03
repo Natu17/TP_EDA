@@ -24,36 +24,11 @@ public class Start {
     }, json());
 
 
-    String bus= "/paradas-de-colectivo.csv";
-    InputStream is = Start.class.getClass().getResourceAsStream(bus);
-    Reader in = new InputStreamReader(is);
-    Iterable<CSVRecord> recordsBus = CSVFormat.DEFAULT
-            .withFirstRecordAsHeader()
-            .parse(in);
 
-    String sub= "/estaciones-de-subte.csv";
-    InputStream isSub = Start.class.getClass().getResourceAsStream(sub);
-    Reader inSub = new InputStreamReader(isSub);
-    Iterable<CSVRecord> recordsSub = CSVFormat.DEFAULT
-            .withFirstRecordAsHeader()
-            .parse(inSub);
-
-
-    String places= "/espacios-culturales.csv";
-    InputStream isEsp = Start.class.getClass().getResourceAsStream(places);
-    Reader inEsp = new InputStreamReader(isEsp);
-    Iterable<CSVRecord> recordsEsp = CSVFormat.DEFAULT
-            .withFirstRecordAsHeader()
-            .parse(inEsp);
-
-    Index dataEsp = new Index();
-    for (CSVRecord record : recordsEsp) {
-      dataEsp.put(String.valueOf(record.get("establecimiento")), record);
-    }
 
     get("/place", (req, res) -> {
       String searchTerm = req.queryParams("searchTerm");
-      return controller.findPlaces(searchTerm, dataEsp);
+      return controller.findPlaces(searchTerm);
     }, json());
 
 

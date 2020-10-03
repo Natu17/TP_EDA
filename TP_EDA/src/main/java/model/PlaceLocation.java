@@ -35,6 +35,6 @@ public class PlaceLocation implements Comparable<PlaceLocation>{
 
   @Override
   public int compareTo(PlaceLocation o) {
-    return Double.compare(similarity,o.similarity);
+    return Double.compare(o.similarity,similarity);
   }
 }

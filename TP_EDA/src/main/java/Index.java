@@ -50,7 +50,7 @@ public class Index {
                 } else{
                     str1A = scanner1.next();
                     str2B = scanner2.next();
-                    distance = normalizedSimilarity(str1A,str2B);
+                    distance = Math.max(distance,normalizedSimilarity(str1A,str2B)); //1
                 }
 
             }
