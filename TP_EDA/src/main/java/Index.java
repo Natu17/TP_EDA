@@ -75,9 +75,11 @@ public class Index {
             Double similarity = similarytyWhite(str1,entry.getKey());
             if(similarity >= 0.8){
                 PlaceLocation placeLocation = new PlaceLocation(entry.getKey(), Double.valueOf(entry.getValue().get("latitud")), Double.valueOf(entry.getValue().get("longitud")));
+                placeLocation.similarity(similarity);
                 results.add(placeLocation);
             }
         }
+        Collections.sort(results);
         return results;
     }
 

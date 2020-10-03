@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 
-public class PlaceLocation {
+public class PlaceLocation implements Comparable<PlaceLocation>{
   private double similarity;
   private double lat;
   private double lng;
@@ -17,7 +17,9 @@ public class PlaceLocation {
     this.lng = lng;
 
   }
-
+  public void similarity(double similarity){
+    this.similarity = similarity;
+  }
 
   public double getLat() {
     return lat;
@@ -31,5 +33,8 @@ public class PlaceLocation {
     return name;
   }
 
-  public int compareTo(int similarity1){return Double.compare(similarity,similarity1);}
+  @Override
+  public int compareTo(PlaceLocation o) {
+    return Double.compare(similarity,o.similarity);
+  }
 }
