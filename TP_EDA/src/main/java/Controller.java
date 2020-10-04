@@ -30,6 +30,7 @@ public class Controller {
             .parse(in);
     for (CSVRecord record : recordsBus) {
       map.addBusStation(record);
+      System.out.println(record);
     }
 
     String sub= "/estaciones-de-subte.csv";

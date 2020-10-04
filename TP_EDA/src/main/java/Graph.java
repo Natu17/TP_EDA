@@ -7,9 +7,12 @@ public class Graph {
 final static long NO_PARENT = -3;
 
     Map<Long, Node> nodes;
+    Map<String, Node> lines;
 
     public Graph() {
+        lines = new HashMap<>();
         nodes = new HashMap<>();
+
     }
 
     public int size(){
@@ -22,6 +25,7 @@ final static long NO_PARENT = -3;
     }
     Node addNode(long id, String name, double lat, double lng, int direction) {
         Node node = new Node(id, name, lat, lng,direction);
+        lines.put(name,node);
         nodes.put(id, node);
         return node;
     }
@@ -107,48 +111,9 @@ final static long NO_PARENT = -3;
         return result;
 
     }
-    class Node {
-        long id;
-        String name;
-        int direction;
-        Set<Edge> edges;
-        double lat;
-        double lng;
-        boolean marked;
-        double cost;
 
-        public Node(long id, String name, double lat, double lng, int direction) {
-            this.lng = lng;
-            this.lat = lat;
-            this.name = name;
-            this.id = id;
-            this.direction = direction;
-            edges = new HashSet<>();
-        }
-
-        void mark() {
-            marked = true;
-        }
-
-        void unmark() {
-            marked = false;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Node node = (Node) o;
-            if(Long.compare(node.id, id) == 0){
-                return true;
-            }
-            return false;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(id);
-        }
+    public void addNode(Node node) {
+        nodes.put(node.id, node);
     }
 
     class Edge {
