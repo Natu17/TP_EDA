@@ -11,7 +11,7 @@ import static utils.Json.json;
 
 public class Start {
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) {
     Controller controller = new Controller();
     cors();
     after((req, res) -> res.type("application/json"));
@@ -22,20 +22,11 @@ public class Start {
       double toLng = Double.parseDouble(req.queryParams("toLng"));
       return controller.findPath(fromLat, fromLng, toLat, toLng);
     }, json());
-
-
-
-
     get("/place", (req, res) -> {
       String searchTerm = req.queryParams("searchTerm");
       return controller.findPlaces(searchTerm);
     }, json());
-
-
-
   }
-
-
 
   public static void cors() {
     before((req, res) -> {

@@ -20,41 +20,52 @@ public class Controller {
   final static int DIRECTION_START = -3;
   final static int DIRECTION_END = -4;
 
-  public Controller() throws IOException {
+  public Controller() {
 
     String bus= "/paradas-de-colectivo.csv";
     InputStream is = Start.class.getClass().getResourceAsStream(bus);
     Reader in = new InputStreamReader(is);
-    Iterable<CSVRecord> recordsBus = CSVFormat.DEFAULT
-            .withFirstRecordAsHeader()
-            .parse(in);
-    for (CSVRecord record : recordsBus) {
-      map.addBusStation(record);
-      System.out.println(record);
-    }
+
+            try{
+              Iterable<CSVRecord> recordsBus = CSVFormat.DEFAULT
+                      .withFirstRecordAsHeader()
+              .parse(in);
+              for (CSVRecord record : recordsBus) {
+                map.addBusStation(record);
+              }
+
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
 
     String sub= "/estaciones-de-subte.csv";
     InputStream isSub = Start.class.getClass().getResourceAsStream(sub);
     Reader inSub = new InputStreamReader(isSub);
-    Iterable<CSVRecord> recordsSub = CSVFormat.DEFAULT
+   try{
+     Iterable<CSVRecord> recordsSub = CSVFormat.DEFAULT
             .withFirstRecordAsHeader()
             .parse(inSub);
     for (CSVRecord record : recordsSub) {
       map.addSubwayStation(record);
-    }
+    } } catch (IOException e) {
+    e.printStackTrace();
+  }
 
 
-    String places= "/espacios-culturales.csv";
+
+  String places= "/espacios-culturales.csv";
     InputStream isEsp = Start.class.getClass().getResourceAsStream(places);
     Reader inEsp = new InputStreamReader(isEsp);
-    Iterable<CSVRecord> recordsEsp = CSVFormat.DEFAULT
-            .withFirstRecordAsHeader()
-            .parse(inEsp);
-
-
+    try{
+      Iterable<CSVRecord> recordsEsp = CSVFormat.DEFAULT
+              .withFirstRecordAsHeader()
+              .parse(inEsp);
     for (CSVRecord record : recordsEsp) {
       dataEsp.put(String.valueOf(record.get("establecimiento")), record);
+    } } catch (IOException e) {
+      e.printStackTrace();
     }
+
   }
 
   public List<BusInPath> findPath(double fromLat, double fromLng, double toLat, double toLng) {
@@ -66,6 +77,7 @@ public class Controller {
   }
 
   public List<PlaceLocation> findPlaces(String searchTerm) {
+    System.out.println(searchTerm);
     return dataEsp.levenshtein(searchTerm);
     //return Arrays.asList(new PlaceLocation("No implementado",0, 0));
   }
