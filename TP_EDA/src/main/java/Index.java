@@ -1,9 +1,16 @@
 import model.PlaceLocation;
+import org.apache.commons.collections.iterators.IteratorEnumeration;
 import org.apache.commons.csv.CSVRecord;
 
 import java.util.*;
 
 public class Index {
+
+    SortedMap<String, CSVRecord> index;
+    public Index() {
+        index =new TreeMap<>(Comparator.naturalOrder());
+    }
+
 
     public int distance(String str1A, String str2A){
         String str1 =str1A.toLowerCase();
@@ -32,12 +39,30 @@ public class Index {
 
         return (1 - (double)(distance(str1.toLowerCase(),str2.toLowerCase()))/Math.max(str1.length(),str2.length()));
     }
-    public double similarytyWhite(String str1, String str2){
-        Scanner scanner1 = new Scanner(str1.toLowerCase());
+    public double similarytyWhite(String str1, String str2) {
         Scanner scanner2 = new Scanner(str2.toLowerCase());
         double distance = 0.0;
-        String str1A = str1;
         String str2B = str2;
+        double ponderation = 0;
+        while (scanner2.hasNext()) {
+            str2B = scanner2.next();
+            Scanner scanner1 = new Scanner(str1.toLowerCase());
+            String str1A = str1;
+            while (scanner1.hasNext()) {
+                str1A = scanner1.next();
+                distance = distance + normalizedSimilarity(str1A, str2B) * (str1A.length() + str2B.length());
+                ponderation = ponderation + str1A.length() + str2B.length();
+            }
+
+        }
+        if (ponderation == 0)
+            throw new NullPointerException();
+        else
+            return (distance / ponderation);
+    }
+
+
+/*
         while (scanner1.hasNext() || scanner2.hasNext()){
             if(!scanner1.hasNext()){
                 str2B = scanner2.next();
@@ -58,29 +83,44 @@ public class Index {
         return distance;
     }
 
+ */
 
 
-    SortedMap<String, CSVRecord> index;
-    public Index() {
-        index =new TreeMap<>(Comparator.naturalOrder());
-    }
 
     public void put(String str, CSVRecord csv){
         index.put(str,csv);
     }
 
     public List<PlaceLocation> levenshtein(String str1){
-        List<PlaceLocation> results = new ArrayList<>();
+        Queue<PlaceLocation> results = new PriorityQueue<>();
         for(Map.Entry<String,CSVRecord> entry: index.entrySet()){
             Double similarity = similarytyWhite(str1,entry.getKey());
-            if(similarity >= 0.8){
+            if(results.size() < 10){
                 PlaceLocation placeLocation = new PlaceLocation(entry.getKey(), Double.valueOf(entry.getValue().get("latitud")), Double.valueOf(entry.getValue().get("longitud")));
                 placeLocation.similarity(similarity);
                 results.add(placeLocation);
             }
+            else{
+                    PlaceLocation placeLocation = results.peek();
+                    if(Double.compare(placeLocation.getSimilarity(),similarity) < 0){
+                        results.remove(placeLocation);
+                        placeLocation = new PlaceLocation(entry.getKey(), Double.valueOf(entry.getValue().get("latitud")), Double.valueOf(entry.getValue().get("longitud")));
+                        placeLocation.similarity(similarity);
+                        results.add(placeLocation);
+                    }
+
+                }
+             }
+
+        List<PlaceLocation> list = new ArrayList<>();
+        for (int i = 0 ; i< 10; i++)
+        {
+            list.add(i, results.poll());
         }
-        Collections.sort(results);
-        return results;
+
+
+        Collections.reverse(list);
+        return list;
     }
 
 

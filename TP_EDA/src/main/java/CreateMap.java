@@ -32,8 +32,9 @@ public class CreateMap {
     }
 
     private void addStation( long id, String lineName, double lat, double lng, int direction ){
-        if(lineName == null )
+
             return;
+            /*
         Node node = new Node(id,lineName,lat,lng,direction);
         Collection<Node> values = graph.nodes();
         Iterator<Node> it = values.iterator();
@@ -58,9 +59,10 @@ public class CreateMap {
             }
 
         }
-
+*/
 
         }
+
     public double ToGrads(double number){
         return (Math.PI / 180)*number;
     }

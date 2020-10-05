@@ -21,6 +21,10 @@ public class PlaceLocation implements Comparable<PlaceLocation>{
     this.similarity = similarity;
   }
 
+  public double getSimilarity() {
+    return similarity;
+  }
+
   public double getLat() {
     return lat;
   }
@@ -35,6 +39,6 @@ public class PlaceLocation implements Comparable<PlaceLocation>{
 
   @Override
   public int compareTo(PlaceLocation o) {
-    return Double.compare(o.similarity,similarity);
+    return Double.compare(similarity,o.similarity);
   }
 }
