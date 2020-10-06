@@ -44,25 +44,32 @@ public class Index {
         double distance = 0.0;
         String str2B = str2;
         double ponderation = 0;
+        double normalizeDistance;
         while (scanner2.hasNext()) {
             str2B = scanner2.next();
             Scanner scanner1 = new Scanner(str1.toLowerCase());
+
             String str1A = str1;
             while (scanner1.hasNext()) {
                 str1A = scanner1.next();
-                double normalizeDistance = normalizedSimilarity(str1A, str2B);
+                normalizeDistance = normalizedSimilarity(str1A, str2B);
                 if (normalizeDistance > 0.7) {
-                    distance = distance + normalizedSimilarity(str1A, str2B) * (str1A.length() + str2B.length()) * (str1A.length() + str2B.length());
+                    distance = distance + normalizeDistance * (str1A.length() + str2B.length()) * (str1A.length() + str2B.length());
                     ponderation = ponderation + (str1A.length() + str2B.length()) * (str1A.length() + str2B.length());
                 } else {
-                    distance = distance + normalizedSimilarity(str1A, str2B) * (str1A.length() + str2B.length());
+                    distance = distance + normalizeDistance * (str1A.length() + str2B.length());
                     ponderation = ponderation + str1A.length() + str2B.length();
                 }
             }
         }
-
-        distance = distance + normalizedSimilarity(str1,str2)*(str1.length() + str2.length());
-        ponderation = ponderation + str1.length() + str2.length();
+        normalizeDistance = normalizedSimilarity(str1, str2);
+        if (normalizeDistance > 0.7) {
+            distance = distance +  normalizeDistance* (str1.length() + str2B.length()) * (str1.length() + str2B.length());
+            ponderation = ponderation + (str1.length() + str2B.length()) * (str1.length() + str2B.length());
+        }else {
+            distance = distance + normalizeDistance * (str1.length() + str2.length());
+            ponderation = ponderation + str1.length() + str2.length();
+        }
 
         if (ponderation == 0)
             throw new NullPointerException();
