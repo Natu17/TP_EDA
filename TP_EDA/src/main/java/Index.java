@@ -77,32 +77,6 @@ public class Index {
             return (distance / ponderation);
     }
 
-
-/*
-        while (scanner1.hasNext() || scanner2.hasNext()){
-            if(!scanner1.hasNext()){
-                str2B = scanner2.next();
-                distance = Math.max(distance,normalizedSimilarity(str1A,str2B));
-            }else {
-                if (!scanner2.hasNext()) {
-                    str1A = scanner1.next();
-                    distance = Math.max(distance,normalizedSimilarity(str1A,str2B));
-
-                } else{
-                    str1A = scanner1.next();
-                    str2B = scanner2.next();
-                    distance = Math.max(distance,normalizedSimilarity(str1A,str2B)); //1
-                }
-
-            }
-        }
-        return distance;
-    }
-
- */
-
-
-
     public void put(String str, CSVRecord csv){
         index.put(str,csv);
     }

@@ -107,7 +107,7 @@ final static long NO_PARENT = -3;
                 target = ans.get(target);
             }
         }
-
+        Collections.reverse(result);
         return result;
 
     }
