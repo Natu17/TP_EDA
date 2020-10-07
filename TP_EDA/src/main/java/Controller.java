@@ -72,6 +72,7 @@ public class Controller {
     map.addWalkingStation(ID_START,fromLat,fromLng,DIRECTION_START);
     map.addWalkingStation(ID_END,toLat,toLng,DIRECTION_END);
     Graph graph = map.getGraph();
+    map.deleteStartEnd();
     return graph.answer(ID_START,ID_END);
 
   }

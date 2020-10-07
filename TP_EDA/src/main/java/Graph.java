@@ -111,9 +111,8 @@ final static long NO_PARENT = -3;
             }
         }
         Collections.reverse(result);
-        nodes.remove(idStart);
-        nodes.remove(idEnd);
-
+        deleteEdges(nodes.get(idStart));
+        deleteEdges(nodes.get(idEnd));
         return result;
 
     }
@@ -130,6 +129,10 @@ final static long NO_PARENT = -3;
             this.targetNode = targetNode;
             this.weight = weight;
         }
+    }
+
+    public void deleteEdges(Node node){
+        node.edges.clear();
     }
 
     class PqNode implements Comparable<PqNode> {
