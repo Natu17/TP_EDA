@@ -68,20 +68,14 @@ public class CreateMap {
             int column = (int) (widthDist);
 
             addCost(node, row, column);
-            city[row][column].add(node);
 
-            /*
-            if(node.id == ID_START){
-                rowStart = row;
-                columnStart = column;
-            }else{
-                if(node.id == ID_END){
-                    rowEnd = row;
-                    columnEnd = column;
-                }
+
+
+            if(!(node.id == ID_START || node.id == ID_END)){
+                city[row][column].add(node);
             }
-            
-             */
+
+
 
         }
 

@@ -79,6 +79,5 @@ public class Controller {
   public List<PlaceLocation> findPlaces(String searchTerm) {
     System.out.println(searchTerm);
     return dataEsp.levenshtein(searchTerm);
-    //return Arrays.asList(new PlaceLocation("No implementado",0, 0));
   }
 }
