@@ -53,24 +53,14 @@ public class Index {
             while (scanner1.hasNext()) {
                 str1A = scanner1.next();
                 normalizeDistance = normalizedSimilarity(str1A, str2B);
-                if (normalizeDistance > 0.7) {
-                    distance = distance + normalizeDistance * (str1A.length() + str2B.length()) * (str1A.length() + str2B.length());
-                    ponderation = ponderation + (str1A.length() + str2B.length()) * (str1A.length() + str2B.length());
-                } else {
-                    distance = distance + normalizeDistance * (str1A.length() + str2B.length());
-                    ponderation = ponderation + str1A.length() + str2B.length();
-                }
+                distance = distance + Math.pow(normalizeDistance,10)*(str1A.length());
+                ponderation = ponderation + (str1A.length());
             }
-        }
-        normalizeDistance = normalizedSimilarity(str1, str2);
-        if (normalizeDistance > 0.7) {
-            distance = distance +  normalizeDistance* (str1.length() + str2B.length()) * (str1.length() + str2B.length());
-            ponderation = ponderation + (str1.length() + str2B.length()) * (str1.length() + str2B.length());
-        }else {
-            distance = distance + normalizeDistance * (str1.length() + str2.length());
-            ponderation = ponderation + str1.length() + str2.length();
-        }
 
+
+        }
+        distance = distance + Math.pow(normalizedSimilarity(str1,str2),10)*(str1.length());
+        ponderation = ponderation + str1.length();
         if (ponderation == 0)
             throw new NullPointerException();
         else
