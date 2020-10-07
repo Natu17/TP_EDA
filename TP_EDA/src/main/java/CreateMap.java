@@ -11,7 +11,7 @@ public class CreateMap {
 
     public final static double V_PERSON = 5; //VELOCIDAD PROMEDIO DE UNA PERSONA EN KILOMETROS POR HORA
     public final static double V_SUBWAY = 45;
-    public final static double V_BUS = 10.5;
+    public final static double V_BUS = 17.5; // promedio velocidad de colectivo con metrobus y sin metrobus
     public final static double T_SUBWAY = 0.05;
     public final static double T_BUS = 0.083;
     public final static double RADIO_TIERRA = 6378.0F;
@@ -19,8 +19,15 @@ public class CreateMap {
     public final static double TOP_LEFT_LNG = -58.53361252042868;
     public final static double BOTTOM_RIGHT_LAT = -34.70889591496078;
     public final static double BOTTOM_RIGHT_LNG = -58.335773889403406;
+    final static long ID_START = -1;
+    final static  long ID_END = -2;
     Graph graph = new Graph();
     private List<Node>[][] city;
+    private int rowStart;
+    private int rowEnd;
+    private int columnStart;
+    private int columnEnd;
+
 
     public CreateMap() {
        double height = distanceNormalize(TOP_LEFT_LAT, BOTTOM_RIGHT_LAT, TOP_LEFT_LNG, TOP_LEFT_LNG);
@@ -63,6 +70,19 @@ public class CreateMap {
             addCost(node, row, column);
             city[row][column].add(node);
 
+            /*
+            if(node.id == ID_START){
+                rowStart = row;
+                columnStart = column;
+            }else{
+                if(node.id == ID_END){
+                    rowEnd = row;
+                    columnEnd = column;
+                }
+            }
+            
+             */
+
         }
 
 
@@ -102,6 +122,7 @@ public class CreateMap {
                     }
 
                 }
+
 
     public double ToGrads(double number){
         return (Math.PI / 180)*number;

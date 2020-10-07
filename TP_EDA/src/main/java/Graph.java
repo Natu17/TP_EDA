@@ -44,7 +44,7 @@ final static long NO_PARENT = -3;
         nodes.values().forEach(Node::unmark);
     }
 
-    public Map<Long,Long> getSmallerDistance(long startId, long endId) {
+    private Map<Long,Long> getSmallerDistance(long startId, long endId) {
         unmarkAllNodes();
         nodes.values().forEach(node -> node.cost = Double.MAX_VALUE);
         PriorityQueue<PqNode> queue = new PriorityQueue<>();
@@ -96,18 +96,24 @@ final static long NO_PARENT = -3;
         boolean found = false;
         while(!found){
 
-            if(target == idStart)
-                found = true;
-            else {
+            if(target == idStart) {
+               found = true;
+            }else {
                 Node endPath = nodes.get(ans.get(target));
                 target = ans.get(target);
-                if(target == idStart) return result;
-                Node startPath = nodes.get(ans.get(target));
-                result.add(new BusInPath(endPath.name, startPath.lat, startPath.lng,endPath.lat,endPath.lng));
-                target = ans.get(target);
+                if(target == idStart)
+                    found = true;
+                else {
+                    Node startPath = nodes.get(ans.get(target));
+                    result.add(new BusInPath(endPath.name, startPath.lat, startPath.lng, endPath.lat, endPath.lng));
+                    target = ans.get(target);
+                }
             }
         }
         Collections.reverse(result);
+        nodes.remove(idStart);
+        nodes.remove(idEnd);
+
         return result;
 
     }
@@ -140,5 +146,6 @@ final static long NO_PARENT = -3;
             return Double.compare(cost, other.cost);
         }
     }
+
 }
 
