@@ -9,11 +9,11 @@ import java.util.List;
 
 public class CreateMap {
 
-    public final static double V_PERSON = 5; //VELOCIDAD PROMEDIO DE UNA PERSONA EN KILOMETROS POR HORA
-    public final static double V_SUBWAY = 45;
+    public final static double V_PERSON = 5; //velocidad promedio de una persona
+    public final static double V_SUBWAY = 45; //velocidad promedio de un subte
     public final static double V_BUS = 17.5; // promedio velocidad de colectivo con metrobus y sin metrobus
-    public final static double T_SUBWAY = 0.066;//4 minutos tiempo promedio de espera aproximado del subte
-    public final static double T_BUS = 0.166;
+    public final static double T_SUBWAY = 0.066;//4 minutos tiempo promedio de espera aproximado del subte(esta en horas)
+    public final static double T_BUS = 0.166; //10 minutos tiempo promedio de espera de un colectivo
     public final static double RADIO_TIERRA = 6378.0F;
     public final static double TOP_LEFT_LAT = -34.53435827348597;
     public final static double TOP_LEFT_LNG = -58.53361252042868;
@@ -135,11 +135,11 @@ public class CreateMap {
         }
     }
 
-    public double ToGrads(double number){
+    private double ToGrads(double number){
         return (Math.PI / 180)*number;
     }
 
-    public double distanceNormalize (double lat1, double lat2, double lng1, double lng2)
+    private double distanceNormalize (double lat1, double lat2, double lng1, double lng2)
     {
         double difLatitud = lat1 - lat2;
         //coloca ela diferencia en radianes

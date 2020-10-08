@@ -4,13 +4,12 @@ import java.util.*;
 
 
 public class Graph {
-final static long NO_PARENT = -3;
+
+final static private long NO_PARENT = -3;
 
     Map<Long, Node> nodes;
-    Map<String, Node> lines;
 
     public Graph() {
-        lines = new HashMap<>();
         nodes = new HashMap<>();
 
     }
@@ -23,9 +22,9 @@ final static long NO_PARENT = -3;
     public Collection<Node> nodes(){
         return nodes.values();
     }
+
     Node addNode(long id, String name, double lat, double lng, int direction) {
         Node node = new Node(id, name, lat, lng,direction);
-        lines.put(name,node);
         nodes.put(id, node);
         return node;
     }
