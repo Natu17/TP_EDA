@@ -22,13 +22,7 @@ final static private long NO_PARENT = -3;
     public Collection<Node> nodes(){
         return nodes.values();
     }
-
-    Node addNode(long id, String name, double lat, double lng, int direction) {
-        Node node = new Node(id, name, lat, lng,direction, new HashSet<Edge>());
-        nodes.put(id, node);
-        return node;
-    }
-
+    
     void addEdge(long id1, long id2, double weight) {
         Node node1 = nodes.get(id1);
         Node node2 = nodes.get(id2);
@@ -127,7 +121,7 @@ final static private long NO_PARENT = -3;
             this.weight = weight;
         }
     }
-    
+
     class PqNode implements Comparable<PqNode> {
         Node node;
         double cost;

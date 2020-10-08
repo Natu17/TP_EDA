@@ -61,7 +61,7 @@ public class Controller {
               .withFirstRecordAsHeader()
               .parse(inEsp);
     for (CSVRecord record : recordsEsp) {
-      dataEsp.put(String.valueOf(record.get("establecimiento")), record);
+      dataEsp.put(String.valueOf(record.get("establecimiento")),new PlaceLocation(record.get("establecimiento"), Double.valueOf(record.get("latitud")), Double.valueOf(record.get("longitud"))));
     } } catch (IOException e) {
       e.printStackTrace();
     }

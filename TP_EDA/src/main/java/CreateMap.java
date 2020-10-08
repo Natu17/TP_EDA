@@ -56,7 +56,7 @@ public class CreateMap {
     }
 
     private void addStation(long id, String lineName, double lat, double lng, int direction) {
-        Node node = new Node(id, lineName, lat, lng, direction);
+        Node node = new Node(id, lineName, lat, lng, direction, new HashSet<>());
         graph.addNode(node);
         if (lat < TOP_LEFT_LAT && lng > TOP_LEFT_LNG && lat > BOTTOM_RIGHT_LAT && lng < BOTTOM_RIGHT_LNG) {
             double heightDist = distanceNormalize(TOP_LEFT_LAT, node.lat, TOP_LEFT_LNG, TOP_LEFT_LNG);
@@ -66,14 +66,6 @@ public class CreateMap {
 
             addCost(node, row, column);
             city[row][column].add(node);
-
-           /* if(!(node.id == ID_START && node.id == ID_END)){
-                city[row][column].add(node);
-            }
-
-            */
-
-
 
             if(node.id == ID_START ){
                 rowStart = row;
@@ -112,7 +104,7 @@ public class CreateMap {
                                 if (current.direction == -1) {
 
                                     graph.addEdge(node.id, current.id, dist / V_SUBWAY);
-                                } else graph.addEdge(node.id, current.id, dist / V_BUS);
+                            } else graph.addEdge(node.id, current.id, dist / V_BUS);
                             } else {
                                 if (current.direction == -1 && node.direction == -1) { // los dos son subtes diferentes, estoy caminado de uno al otro
                                     graph.addEdge(node.id, current.id, dist / V_PERSON + T_SUBWAY);

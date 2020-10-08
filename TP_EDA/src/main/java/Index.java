@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Index {
 
-    SortedMap<String, CSVRecord> index;
+    SortedMap<String, PlaceLocation> index;
     public Index() {
         index =new TreeMap<>(Comparator.naturalOrder());
     }
@@ -67,16 +67,16 @@ public class Index {
             return (distance / ponderation);
     }
 
-    public void put(String str, CSVRecord csv){
-        index.put(str,csv);
+    public void put(String str, PlaceLocation placeLocation){
+        index.put(str,placeLocation);
     }
 
     public List<PlaceLocation> search(String str1){
         Queue<PlaceLocation> results = new PriorityQueue<>();
-        for(Map.Entry<String,CSVRecord> entry: index.entrySet()){
+        for(Map.Entry<String,PlaceLocation> entry: index.entrySet()){
             Double similarity = similarytyWhite(str1,entry.getKey());
             if(results.size() < 10){
-                PlaceLocation placeLocation = new PlaceLocation(entry.getKey(), Double.valueOf(entry.getValue().get("latitud")), Double.valueOf(entry.getValue().get("longitud")));
+                PlaceLocation placeLocation = entry.getValue();
                 placeLocation.similarity(similarity);
                 results.add(placeLocation);
             }
@@ -84,7 +84,7 @@ public class Index {
                     PlaceLocation placeLocation = results.peek();
                     if(Double.compare(placeLocation.getSimilarity(),similarity) < 0){
                         results.remove(placeLocation);
-                        placeLocation = new PlaceLocation(entry.getKey(), Double.valueOf(entry.getValue().get("latitud")), Double.valueOf(entry.getValue().get("longitud")));
+                        placeLocation = entry.getValue();
                         placeLocation.similarity(similarity);
                         results.add(placeLocation);
                     }
