@@ -78,7 +78,6 @@ public class Controller {
   }
 
   public List<PlaceLocation> findPlaces(String searchTerm) {
-    System.out.println(searchTerm);
-    return dataEsp.levenshtein(searchTerm);
+    return dataEsp.search(searchTerm);
   }
 }

@@ -12,6 +12,15 @@ public class Node {
     boolean marked;
     double cost;
 
+    public Node(long id, String name, double lat, double lng, int direction, Set<Graph.Edge> set) {
+        this.lng = lng;
+        this.lat = lat;
+        this.name = name;
+        this.id = id;
+        this.direction = direction;
+        edges = set;
+    }
+
     public Node(long id, String name, double lat, double lng, int direction) {
         this.lng = lng;
         this.lat = lat;
@@ -20,6 +29,7 @@ public class Node {
         this.direction = direction;
         edges = new HashSet<>();
     }
+
 
     void mark() {
         marked = true;

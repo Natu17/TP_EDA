@@ -2,10 +2,7 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.ObjectUtils;
 
 import javax.swing.text.StyledEditorKit;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class CreateMap {
 

@@ -71,7 +71,7 @@ public class Index {
         index.put(str,csv);
     }
 
-    public List<PlaceLocation> levenshtein(String str1){
+    public List<PlaceLocation> search(String str1){
         Queue<PlaceLocation> results = new PriorityQueue<>();
         for(Map.Entry<String,CSVRecord> entry: index.entrySet()){
             Double similarity = similarytyWhite(str1,entry.getKey());

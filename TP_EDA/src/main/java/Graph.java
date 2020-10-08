@@ -24,7 +24,7 @@ final static private long NO_PARENT = -3;
     }
 
     Node addNode(long id, String name, double lat, double lng, int direction) {
-        Node node = new Node(id, name, lat, lng,direction);
+        Node node = new Node(id, name, lat, lng,direction, new HashSet<Edge>());
         nodes.put(id, node);
         return node;
     }
@@ -110,8 +110,6 @@ final static private long NO_PARENT = -3;
             }
         }
         Collections.reverse(result);
-        deleteEdges(nodes.get(idStart));
-        deleteEdges(nodes.get(idEnd));
         return result;
 
     }
@@ -129,11 +127,7 @@ final static private long NO_PARENT = -3;
             this.weight = weight;
         }
     }
-
-    public void deleteEdges(Node node){
-        node.edges.clear();
-    }
-
+    
     class PqNode implements Comparable<PqNode> {
         Node node;
         double cost;
