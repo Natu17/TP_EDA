@@ -53,13 +53,13 @@ public class Index {
             while (scanner1.hasNext()) {
                 str1A = scanner1.next();
                 normalizeDistance = normalizedSimilarity(str1A, str2B);
-                distance = distance + Math.pow(normalizeDistance,17)*(str1A.length());
+                distance = distance + Math.pow(normalizeDistance,12)*(str1A.length());
                 ponderation = ponderation + (str1A.length());
             }
 
 
         }
-        distance = distance + Math.pow(normalizedSimilarity(str1,str2),17)*(str1.length());
+        distance = distance + Math.pow(normalizedSimilarity(str1,str2),12)*(str1.length());
         ponderation = ponderation + str1.length();
         if (ponderation == 0)
             throw new NullPointerException();
