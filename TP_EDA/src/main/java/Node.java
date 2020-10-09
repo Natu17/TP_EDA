@@ -1,32 +1,35 @@
+import javafx.util.Pair;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 public class Node {
     long id;
-    String name;
-    int direction;
+    //String name;
+    Pair<String,Integer> name;
+    //int direction;
     Set<Graph.Edge> edges;
     double lat;
     double lng;
     boolean marked;
     double cost;
 
-    public Node(long id, String name, double lat, double lng, int direction, Set<Graph.Edge> set) {
+    public Node(long id, Pair<String,Integer> name, double lat, double lng, Set<Graph.Edge> set) {
         this.lng = lng;
         this.lat = lat;
         this.name = name;
         this.id = id;
-        this.direction = direction;
+        //this.direction = direction;
         edges = set;
     }
 
-    public Node(long id, String name, double lat, double lng, int direction) {
+    public Node(long id, Pair<String,Integer> name, double lat, double lng) {
         this.lng = lng;
         this.lat = lat;
         this.name = name;
         this.id = id;
-        this.direction = direction;
+        //this.direction = direction;
         edges = new HashSet<>();
     }
 
@@ -54,4 +57,7 @@ public class Node {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+
+
 }

@@ -1,3 +1,4 @@
+import javafx.util.Pair;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -11,6 +12,7 @@ public class CreateMap {
     public final static double V_BUS = 17.5; // promedio velocidad de colectivo con metrobus y sin metrobus
     public final static double T_SUBWAY = 0.066;//4 minutos tiempo promedio de espera aproximado del subte(esta en horas)
     public final static double T_BUS = 0.166; //10 minutos tiempo promedio de espera de un colectivo
+    public final static double T_WAIT = 0.116;
     public final static double RADIO_TIERRA = 6378.0F;
     public final static double TOP_LEFT_LAT = -34.53435827348597;
     public final static double TOP_LEFT_LNG = -58.53361252042868;
@@ -56,7 +58,7 @@ public class CreateMap {
     }
 
     private void addStation(long id, String lineName, double lat, double lng, int direction) {
-        Node node = new Node(id, lineName, lat, lng, direction, new HashSet<>());
+        Node node = new Node(id, new Pair<>(lineName,direction), lat, lng, new HashSet<>());
         graph.addNode(node);
         if (lat < TOP_LEFT_LAT && lng > TOP_LEFT_LNG && lat > BOTTOM_RIGHT_LAT && lng < BOTTOM_RIGHT_LNG) {
             double heightDist = distanceNormalize(TOP_LEFT_LAT, node.lat, TOP_LEFT_LNG, TOP_LEFT_LNG);
@@ -65,6 +67,7 @@ public class CreateMap {
             int column = (int) (widthDist);
 
             addCost(node, row, column);
+
             city[row][column].add(node);
 
             if(node.id == ID_START ){
@@ -76,6 +79,7 @@ public class CreateMap {
                     columnEnd = column;
                 }
             }
+          graph.addLine(node);
 
         }
         }
@@ -87,6 +91,23 @@ public class CreateMap {
     }
 
     private void addCost(Node node, int row, int column) {
+
+        if(graph.lines.get(node.name) != null) {
+            Iterator<Node> lines = graph.lines.get(node.name).iterator();
+            while (lines.hasNext()) {
+                Node current = lines.next();
+                double dist = distanceNormalize(current.lat, node.lat, current.lng, node.lng);
+                if (current.name.getValue() == -1) {
+
+                    graph.addEdge(node.id, current.id, dist / V_SUBWAY);
+                } else graph.addEdge(node.id, current.id, dist / V_BUS);
+            }
+
+
+
+        }
+
+
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = column - 1; j <= column + 1; j++) {
                 if (!(i <= -1 || j <= -1 || i >= city.length || j >= city[0].length)) {
@@ -100,19 +121,29 @@ public class CreateMap {
                         while (it.hasNext()) {
                             Node current = it.next();
                             double dist = distanceNormalize(current.lat, node.lat, current.lng, node.lng);
-                            if (node.name.compareTo(current.name) == 0 && Integer.compare(node.direction, current.direction) == 0) {
-                                if (current.direction == -1) {
-
+                            /*
+                            if (node.name.equals(current.name) == true) {
+                                if (current.name.getValue() == -1) {
+                                    dist = distanceNormalize(current.lat, node.lat, current.lng, node.lng);
                                     graph.addEdge(node.id, current.id, dist / V_SUBWAY);
-                            } else graph.addEdge(node.id, current.id, dist / V_BUS);
+                                } else
+                                    dist = distanceNormalize(current.lat, node.lat, current.lng, node.lng);
+                                    graph.addEdge(node.id, current.id, dist / V_BUS);
                             } else {
-                                if (current.direction == -1 && node.direction == -1) { // los dos son subtes diferentes, estoy caminado de uno al otro
+
+                             */
+
+                                if (current.name.getValue() == -1 && node.name.getValue() == -1 || node.name.getValue() == -3 && current.name.getValue() == -1) { // los dos son subtes diferentes, estoy caminado de uno al otro
                                     graph.addEdge(node.id, current.id, dist / V_PERSON + T_SUBWAY);
                                 } else {
-                                    if (current.direction == 0 || current.direction == 1 || node.direction == 0|| node.direction == 1) {
+                                    if ((current.name.getValue() == 0 || current.name.getValue() == 1) && (node.name.getValue() == 0 || node.name.getValue() == 1) || node.name.getValue() == -3 && (current.name.getValue() == 0 || current.name.getValue() == 1)) {
                                         graph.addEdge(node.id, current.id, dist / V_PERSON + T_BUS); //fijarse despues el peso (se modifica dependiendo de la distancia)
                                     } else
-                                        graph.addEdge(node.id, current.id, dist / V_PERSON);
+                                        if((current.name.getValue() == 0 || current.name.getValue() == 1 )  && node.name.getValue() == -1 || (node.name.getValue() == 1 || node.name.getValue() == 0) && current.name.getValue() == -1){
+                                            graph.addEdge(node.id, current.id, dist / V_PERSON + T_WAIT);
+                                        }
+                                           else
+                                               graph.addEdge(node.id, current.id, dist / V_PERSON);
                                 }
                             }
                         }
@@ -122,7 +153,6 @@ public class CreateMap {
 
             }
         }
-    }
 
     private double ToGrads(double number){
         return (Math.PI / 180)*number;

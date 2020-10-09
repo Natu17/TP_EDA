@@ -1,3 +1,4 @@
+import javafx.util.Pair;
 import model.BusInPath;
 
 import java.util.*;
@@ -9,8 +10,10 @@ final static private long NO_PARENT = -3;
 
     Map<Long, Node> nodes;
 
+    Map<Pair<String,Integer>,List<Node>> lines;
     public Graph() {
         nodes = new HashMap<>();
+        lines = new HashMap<>();
 
     }
 
@@ -62,7 +65,7 @@ final static private long NO_PARENT = -3;
                     }else {
 
 
-                        if (((pqNode.node.name).compareTo(edge.targetNode.name)) == 0 && (edge.targetNode.name).compareTo(nodes.get(parents.get(pqNode.node.id)).name) == 0) {
+                        if (((pqNode.node.name).equals(edge.targetNode.name)) == true && (edge.targetNode.name).equals(nodes.get(parents.get(pqNode.node.id)).name) == true) {
                             parents.put(edge.targetNode.id, nodes.get(parents.get(pqNode.node.id)).id);
                         }else
                         {
@@ -98,7 +101,7 @@ final static private long NO_PARENT = -3;
                     found = true;
                 else {
                     Node startPath = nodes.get(ans.get(target));
-                    result.add(new BusInPath(endPath.name, startPath.lat, startPath.lng, endPath.lat, endPath.lng));
+                    result.add(new BusInPath(endPath.name.getKey(), startPath.lat, startPath.lng, endPath.lat, endPath.lng));
                     target = ans.get(target);
                 }
             }
@@ -109,7 +112,17 @@ final static private long NO_PARENT = -3;
     }
 
     public void addNode(Node node) {
+
+
         nodes.put(node.id, node);
+    }
+
+    public void addLine(Node node){
+        if(lines.get(node.name) == null){
+            lines.put(node.name,new ArrayList<>());
+        }
+        lines.get(node.name).add(node);
+
     }
 
     class Edge {
