@@ -22,7 +22,7 @@ final static private long NO_PARENT = -3;
     public Collection<Node> nodes(){
         return nodes.values();
     }
-    
+
     void addEdge(long id1, long id2, double weight) {
         Node node1 = nodes.get(id1);
         Node node2 = nodes.get(id2);

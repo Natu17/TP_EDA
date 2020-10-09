@@ -11,10 +11,10 @@ public class IndexTest {
         Assertions.assertEquals(0,  lv.distance("machine", "machine"));
 
         Assertions.assertEquals(1, lv.similarytyWhite("yenny", "yenny"));
-        Assertions.assertEquals(0.10775343636417861, lv.similarytyWhite("big data", "bigdata"));
-        Assertions.assertEquals(0.3333347687693427, lv.similarytyWhite("Yenny", "Yenny (abasto)"));
+        Assertions.assertEquals(0.0551324374886737, lv.similarytyWhite("big data", "bigdata"));
+        Assertions.assertEquals(0.3333335183766464, lv.similarytyWhite("Yenny", "Yenny (abasto)"));
         Assertions.assertEquals(1, lv.similarytyWhite("pepe", "pepe"));
-        Assertions.assertEquals(0.0014518154494743858,lv.similarytyWhite("Yenny", "Leon Leon"));
+        Assertions.assertEquals(0.005349617621108706,lv.similarytyWhite("Yenn", "Leon Leon"));
 
         Assertions.assertEquals(0.6,  lv.normalizedSimilarity("smart", "art"));
         Assertions.assertEquals(0.8, lv.normalizedSimilarity("match", "matc"));

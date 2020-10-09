@@ -12,39 +12,48 @@ public class Index {
     }
 
 
-    public int distance(String str1A, String str2A){
-        String str1 =str1A.toLowerCase();
-        String str2 =str2A.toLowerCase();
-        int lenght1= str1.length();
+    public int distance(String str1, String str2) {
+        if (str1.length() <= str2.length()) {
+            return levenDistance(str1,str2);
+        } else {
+            return levenDistance(str2,str1);
+        }
+
+    }
+
+    private int levenDistance(String str1, String str2){
+        int[] string;
+        int lenght1 = str1.length();
         int lenght2 = str2.length();
-        int[][] matrix = new int[lenght1][lenght2];
-        for(int i=0; i<lenght1; i++){
-            matrix[i][0] = i;
+        string = new int[lenght1];
+        for (int i = 0; i < lenght1; i++) {
+            string[i] = i;
         }
-        for(int i=0; i<lenght2; i++){
-            matrix[0][i] = i;
-        }
-        for(int i= 1; i < lenght1; i++){
-            for(int j= 1; j<lenght2; j++){
-
-                matrix[i][j] = Math.min(matrix[i - 1][j], matrix[i][j-1]) + 1;
-                matrix[i][j] = Math.min(matrix[i][j], matrix[i-1][j-1] + (str1.charAt(i) == str2.charAt(j)?0:1));
+        int value = str2.length();
+        for (int j = 1; j < lenght2; j++) {
+            for (int i = 1; i < lenght1; i++) {
+                int aux = value;
+                value = Math.min(value, string[i]) + 1;
+                value = Math.min(value, string[i - 1] + (str1.charAt(i) == str2.charAt(j) ? 0 : 1));
+                string[i-1] = aux;
             }
-
+            string[lenght1 - 1] = value;
         }
-        return matrix[lenght1 - 1][lenght2 - 1];
+        return value = string[lenght1 - 1];
+    }
+    public double normalizedSimilarity(String str1,String str2){
+        return (1 - (double)(distance(str1,str2))/Math.max(str1.length(),str2.length()));
     }
 
-    public double normalizedSimilarity(String str1, String str2){
 
-        return (1 - (double)(distance(str1.toLowerCase(),str2.toLowerCase()))/Math.max(str1.length(),str2.length()));
-    }
+
     public double similarytyWhite(String str1, String str2) {
         Scanner scanner2 = new Scanner(str2.toLowerCase());
         double distance = 0.0;
         String str2B = str2;
         double ponderation = 0;
         double normalizeDistance;
+
         while (scanner2.hasNext()) {
             str2B = scanner2.next();
             Scanner scanner1 = new Scanner(str1.toLowerCase());
@@ -53,14 +62,37 @@ public class Index {
             while (scanner1.hasNext()) {
                 str1A = scanner1.next();
                 normalizeDistance = normalizedSimilarity(str1A, str2B);
-                distance = distance + Math.pow(normalizeDistance,12)*(str1A.length());
-                ponderation = ponderation + (str1A.length());
+
+                distance = distance + Math.pow(normalizeDistance,17)*(str1A.length());
+                ponderation = ponderation + str1A.length();
             }
 
 
         }
-        distance = distance + Math.pow(normalizedSimilarity(str1,str2),12)*(str1.length());
+        distance = distance + Math.pow(normalizedSimilarity(str1,str2),17)*(str1.length());
         ponderation = ponderation + str1.length();
+
+  /*
+
+                if (normalizeDistance >= 0.8) {
+                    distance = distance + normalizeDistance *Math.pow(str1A.length(),3);
+                    ponderation = ponderation + Math.pow(str1A.length(),3);
+                } else {
+                    distance = distance + normalizeDistance * (str1A.length());
+                    ponderation = ponderation + str1A.length();
+                }
+            }
+        }
+            normalizeDistance = normalizedSimilarity(str1, str2);
+        if (normalizeDistance >= 0.8) {
+            distance = distance +  normalizeDistance*Math.pow(str1.length(),3);
+            ponderation = ponderation + Math.pow(str1.length(),3);
+        }else {
+            distance = distance + normalizeDistance * (str1.length());
+            ponderation = ponderation + str1.length();
+        }
+
+ */
         if (ponderation == 0)
             throw new NullPointerException();
         else
