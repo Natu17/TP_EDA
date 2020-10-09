@@ -126,11 +126,11 @@ public class Index {
                         results.add(placeLocation);
                     }
 
-                }
-             }
-
+            }
+        }
+        int queueSize = results.size();
         List<PlaceLocation> list = new ArrayList<>();
-        for (int i = 0 ; i< list.size(); i++)
+        for (int i = 0 ; i< queueSize; i++)
         {
             list.add(i, results.poll());
         }
