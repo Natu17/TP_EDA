@@ -12,7 +12,7 @@ public class CreateMap {
     public final static double V_BUS = 17.5; // promedio velocidad de colectivo con metrobus y sin metrobus
     public final static double T_SUBWAY = 0.066;//4 minutos tiempo promedio de espera aproximado del subte(esta en horas)
     public final static double T_BUS = 0.166; //10 minutos tiempo promedio de espera de un colectivo
-    public final static double T_WAIT = 0.116;
+    public final static double T_WAIT = 0.116; //7 minutos tiempo promedio de espera de un transporte
     public final static double RADIO_TIERRA = 6378.0F;
     public final static double TOP_LEFT_LAT = -34.53435827348597;
     public final static double TOP_LEFT_LNG = -58.53361252042868;

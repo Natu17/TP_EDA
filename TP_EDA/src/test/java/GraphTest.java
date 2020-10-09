@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GraphTest {
 
+    /*
     Graph testGraph1 = new Graph();
     Graph testGraph2 = new Graph();
 
@@ -67,4 +68,6 @@ class GraphTest {
             Assertions.assertEquals("A", myAnswer.get(0).name);
             Assertions.assertEquals("B", myAnswer.get(1).name);
         }
+
+     */
 }

@@ -46,7 +46,6 @@ public class Index {
     }
 
 
-
     public double similarytyWhite(String str1, String str2) {
         Scanner scanner2 = new Scanner(str2.toLowerCase());
         double distance = 0.0;
@@ -54,23 +53,34 @@ public class Index {
         double ponderation = 0;
         double normalizeDistance;
 
-        while (scanner2.hasNext()) {
-            str2B = scanner2.next();
-            Scanner scanner1 = new Scanner(str1.toLowerCase());
+        normalizeDistance = normalizedSimilarity(str1, str2);
+        if (normalizeDistance != 1) {
+            distance = distance + Math.pow(normalizedSimilarity(str1, str2), 17) * (str1.length());
+            ponderation = ponderation + str1.length();
 
-            String str1A = str1;
-            while (scanner1.hasNext()) {
-                str1A = scanner1.next();
-                normalizeDistance = normalizedSimilarity(str1A, str2B);
+            while (scanner2.hasNext()) {
+                str2B = scanner2.next();
+                Scanner scanner1 = new Scanner(str1.toLowerCase());
 
-                distance = distance + Math.pow(normalizeDistance,17)*(str1A.length());
-                ponderation = ponderation + str1A.length();
+                String str1A = str1;
+                while (scanner1.hasNext()) {
+                    str1A = scanner1.next();
+                    normalizeDistance = normalizedSimilarity(str1A, str2B);
+
+                    distance = distance + Math.pow(normalizeDistance, 17) * (str1A.length());
+                    ponderation = ponderation + str1A.length();
+                }
+
             }
-
-
+            if (ponderation == 0)
+                throw new NullPointerException();
+            else
+                return (distance / ponderation);
         }
-        distance = distance + Math.pow(normalizedSimilarity(str1,str2),17)*(str1.length());
-        ponderation = ponderation + str1.length();
+
+        return normalizeDistance;
+
+    }
 
   /*
 
@@ -93,11 +103,6 @@ public class Index {
         }
 
  */
-        if (ponderation == 0)
-            throw new NullPointerException();
-        else
-            return (distance / ponderation);
-    }
 
     public void put(String str, PlaceLocation placeLocation){
         index.put(str,placeLocation);
@@ -125,7 +130,7 @@ public class Index {
              }
 
         List<PlaceLocation> list = new ArrayList<>();
-        for (int i = 0 ; i< 10; i++)
+        for (int i = 0 ; i< list.size(); i++)
         {
             list.add(i, results.poll());
         }
