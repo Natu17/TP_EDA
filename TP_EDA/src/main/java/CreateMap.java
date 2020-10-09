@@ -120,7 +120,8 @@ public class CreateMap {
                         Iterator<Node> it = city[i][j].iterator();
                         while (it.hasNext()) {
                             Node current = it.next();
-                            double dist = distanceNormalize(current.lat, node.lat, current.lng, node.lng);
+                            if(current.name.equals(current.name) == false) {
+                                double dist = distanceNormalize(current.lat, node.lat, current.lng, node.lng);
                             /*
                             if (node.name.equals(current.name) == true) {
                                 if (current.name.getValue() == -1) {
@@ -138,13 +139,12 @@ public class CreateMap {
                                 } else {
                                     if ((current.name.getValue() == 0 || current.name.getValue() == 1) && (node.name.getValue() == 0 || node.name.getValue() == 1) || node.name.getValue() == -3 && (current.name.getValue() == 0 || current.name.getValue() == 1)) {
                                         graph.addEdge(node.id, current.id, dist / V_PERSON + T_BUS); //fijarse despues el peso (se modifica dependiendo de la distancia)
+                                    } else if ((current.name.getValue() == 0 || current.name.getValue() == 1) && node.name.getValue() == -1 || (node.name.getValue() == 1 || node.name.getValue() == 0) && current.name.getValue() == -1) {
+                                        graph.addEdge(node.id, current.id, dist / V_PERSON + T_WAIT);
                                     } else
-                                        if((current.name.getValue() == 0 || current.name.getValue() == 1 )  && node.name.getValue() == -1 || (node.name.getValue() == 1 || node.name.getValue() == 0) && current.name.getValue() == -1){
-                                            graph.addEdge(node.id, current.id, dist / V_PERSON + T_WAIT);
-                                        }
-                                           else
-                                               graph.addEdge(node.id, current.id, dist / V_PERSON);
+                                        graph.addEdge(node.id, current.id, dist / V_PERSON);
                                 }
+                            }
                             }
                         }
 
