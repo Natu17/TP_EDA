@@ -64,9 +64,7 @@ final static private long NO_PARENT = -3;
                     if(pqNode.node.id == startId){
                         parents.put(edge.targetNode.id, pqNode.node.id);
                     }else {
-
-
-                        if (((pqNode.node.name).equals(edge.targetNode.name)) == true && (edge.targetNode.name).equals(nodes.get(parents.get(pqNode.node.id)).name) == true) {
+                        if (((pqNode.node.name).equals(edge.targetNode.name)) && (edge.targetNode.name).equals(nodes.get(parents.get(pqNode.node.id)).name)) {
                             parents.put(edge.targetNode.id, nodes.get(parents.get(pqNode.node.id)).id);
                         }else
                         {
@@ -102,8 +100,10 @@ final static private long NO_PARENT = -3;
                     found = true;
                 else {
                     Node startPath = nodes.get(ans.get(target));
-                    result.add(new BusInPath(endPath.name.getKey(), startPath.lat, startPath.lng, endPath.lat, endPath.lng));
-                    target = ans.get(target);
+                    if (endPath.name.equals(startPath.name)) {
+                        result.add(new BusInPath(endPath.name.getKey(), startPath.lat, startPath.lng, endPath.lat, endPath.lng));
+                        target = ans.get(target);
+                    }
                 }
             }
         }
