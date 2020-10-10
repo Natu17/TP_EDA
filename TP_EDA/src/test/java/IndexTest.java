@@ -1,5 +1,4 @@
 import model.PlaceLocation;
-import org.apache.commons.csv.CSVRecord;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +12,11 @@ public class IndexTest {
         Assertions.assertEquals(2,  lv.distance("smart", "art"));
         Assertions.assertEquals(0,  lv.distance("machine", "machine"));
 
-        Assertions.assertEquals(1, lv.similarytyWhite("yenny", "yenny"));
-        Assertions.assertEquals(0.0551324374886737, lv.similarytyWhite("big data", "bigdata"));
-        Assertions.assertEquals(0.3333335183766464, lv.similarytyWhite("Yenny", "Yenny (abasto)"));
-        Assertions.assertEquals(1, lv.similarytyWhite("pepe", "pepe"));
-        Assertions.assertEquals(0.005349617621108706,lv.similarytyWhite("Yenn", "Leon Leon"));
+        Assertions.assertEquals(1, lv.similarityWhite("yenny", "yenny"));
+        Assertions.assertEquals(0.0551324374886737, lv.similarityWhite("big data", "bigdata"));
+        Assertions.assertEquals(0.3333335183766464, lv.similarityWhite("Yenny", "Yenny (abasto)"));
+        Assertions.assertEquals(1, lv.similarityWhite("pepe", "pepe"));
+        Assertions.assertEquals(0.005349617621108706,lv.similarityWhite("Yenn", "Leon Leon"));
 
         Assertions.assertEquals(0.6,  lv.normalizedSimilarity("smart", "art"));
         Assertions.assertEquals(0.8, lv.normalizedSimilarity("match", "matc"));

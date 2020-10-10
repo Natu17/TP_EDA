@@ -15,16 +15,6 @@ final static private long NO_PARENT = -3;
     public Graph() {
         nodes = new HashMap<>();
         lines = new HashMap<>();
-
-    }
-
-    public int size(){
-        return nodes.size();
-    }
-
-
-    public Collection<Node> nodes(){
-        return nodes.values();
     }
 
     void addEdge(long id1, long id2, double weight) {
@@ -80,13 +70,10 @@ final static private long NO_PARENT = -3;
     }
 
 
-
     public List<BusInPath> answer(long idStart, long idEnd){
         Map<Long, Long> ans = getSmallerDistance(idStart, idEnd);
         List<BusInPath> result = new ArrayList<>();
         long target =idEnd;
-        Node node = nodes.get(idEnd);
-
 
         boolean found = false;
         while(!found){
@@ -113,8 +100,6 @@ final static private long NO_PARENT = -3;
     }
 
     public void addNode(Node node) {
-
-
         nodes.put(node.id, node);
     }
 
