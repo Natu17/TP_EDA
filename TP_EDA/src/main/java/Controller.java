@@ -11,8 +11,8 @@ import java.util.List;
 
 
 public class Controller {
-  Index dataEsp = new Index();
-  CreateMap map = new CreateMap();
+  private Index dataEsp = new Index();
+  private CreateMap map = new CreateMap();
 
   final static long ID_START = -1;
   final static  long ID_END = -2;
