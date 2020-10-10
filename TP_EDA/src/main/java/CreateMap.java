@@ -118,7 +118,7 @@ public class CreateMap {
                         Iterator<Node> it = city[i][j].iterator();
                         while (it.hasNext()) {
                             Node current = it.next();
-                            if(current.name.equals(node.name) == false) {
+                            if(!current.name.equals(node.name)) {
                                 double dist = distanceNormalize(current.lat, node.lat, current.lng, node.lng);
                             /*
                             if (node.name.equals(current.name) == true) {
