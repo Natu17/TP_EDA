@@ -60,16 +60,16 @@ public class Index {
 
             while (scanner2.hasNext()) {
                 str2B = scanner2.next();
-                Scanner scanner1 = new Scanner(str1.toLowerCase());
 
-                String str1A = str1;
+                Scanner scanner1 = new Scanner(str1.toLowerCase());
                 while (scanner1.hasNext()) {
-                    str1A = scanner1.next();
+                    String str1A = scanner1.next();
                     normalizeDistance = normalizedSimilarity(str1A, str2B);
 
                     distance = distance + Math.pow(normalizeDistance, 17) * (str1A.length());
                     ponderation = ponderation + str1A.length();
                 }
+
 
             }
             if (ponderation == 0)
