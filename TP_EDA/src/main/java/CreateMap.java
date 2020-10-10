@@ -1,8 +1,5 @@
 import javafx.util.Pair;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.lang3.ObjectUtils;
-
-import javax.swing.text.StyledEditorKit;
 import java.util.*;
 
 public class CreateMap {
@@ -14,10 +11,12 @@ public class CreateMap {
     public final static double T_BUS = 0.166; //10 minutos tiempo promedio de espera de un colectivo
     public final static double T_WAIT = 0.116; //7 minutos tiempo promedio de espera de un transporte
     public final static double RADIO_TIERRA = 6378.0F;
-    public final static double TOP_LEFT_LAT = -34.53435827348597;
-    public final static double TOP_LEFT_LNG = -58.53361252042868;
-    public final static double BOTTOM_RIGHT_LAT = -34.70889591496078;
-    public final static double BOTTOM_RIGHT_LNG = -58.335773889403406;
+    public final static double TOP_LEFT_LAT = -34.514969508937995;
+    public final static double TOP_LEFT_LNG = -58.54689524615272;
+    public final static double BOTTOM_RIGHT_LAT = -34.72381361793913;
+    public final static double BOTTOM_RIGHT_LNG = -58.317110194839806;
+    final static int DIRECTION_START = -3;
+    final static int DIRECTION_END = -4;
     final static long ID_START = -1;
     final static long ID_END = -2;
     Graph graph = new Graph();
@@ -31,12 +30,11 @@ public class CreateMap {
     public CreateMap() {
         double height = distanceNormalize(TOP_LEFT_LAT, BOTTOM_RIGHT_LAT, TOP_LEFT_LNG, TOP_LEFT_LNG);
         double width = distanceNormalize(BOTTOM_RIGHT_LAT, BOTTOM_RIGHT_LAT, TOP_LEFT_LNG, BOTTOM_RIGHT_LNG);
-        int rows = (int) (height + 1);
-        int columns = (int) (width + 1);
+        int rows = (int) (height/0.5 + 1);
+        int columns = (int) (width/0.5 + 1);
         city = new List[rows][columns];
         System.out.println(rows);
         System.out.println(columns);
-        System.out.println("BASE");
     }
 
 
@@ -63,8 +61,8 @@ public class CreateMap {
         if (lat < TOP_LEFT_LAT && lng > TOP_LEFT_LNG && lat > BOTTOM_RIGHT_LAT && lng < BOTTOM_RIGHT_LNG) {
             double heightDist = distanceNormalize(TOP_LEFT_LAT, node.lat, TOP_LEFT_LNG, TOP_LEFT_LNG);
             double widthDist = distanceNormalize(TOP_LEFT_LAT, TOP_LEFT_LAT, TOP_LEFT_LNG, node.lng);
-            int row = (int) (heightDist);
-            int column = (int) (widthDist);
+            int row = (int) (heightDist/0.5);
+            int column = (int) (widthDist/0.5);
 
             addCost(node, row, column);
 
@@ -134,7 +132,7 @@ public class CreateMap {
 
                              */
 
-                                if (current.name.getValue() == -1 && node.name.getValue() == -1 || node.name.getValue() == -3 && current.name.getValue() == -1) { // los dos son subtes diferentes, estoy caminado de uno al otro
+                                if (current.name.getValue() == -1 && node.name.getValue() == -1 || node.name.getValue() == DIRECTION_START && current.name.getValue() == -1) { // los dos son subtes diferentes, estoy caminado de uno al otro
                                     graph.addEdge(node.id, current.id, dist / V_PERSON + T_SUBWAY);
                                 } else {
                                     if ((current.name.getValue() == 0 || current.name.getValue() == 1) && (node.name.getValue() == 0 || node.name.getValue() == 1) || node.name.getValue() == -3 && (current.name.getValue() == 0 || current.name.getValue() == 1)) {

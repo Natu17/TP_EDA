@@ -63,7 +63,6 @@ final static private long NO_PARENT = -3;
                     queue.add(new PqNode(edge.targetNode, targetNodeCost));
                     if(pqNode.node.id == startId){
                         parents.put(edge.targetNode.id, pqNode.node.id);
-                        System.out.println(edge.targetNode.name.getKey());
                     }else {
 
 
