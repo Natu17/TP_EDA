@@ -119,9 +119,7 @@ final static private long NO_PARENT = -3;
     }
 
     public void addLine(Node node){
-        if(lines.get(node.name) == null){
-            lines.put(node.name,new ArrayList<>());
-        }
+        lines.computeIfAbsent(node.name, k -> new ArrayList<>());
         lines.get(node.name).add(node);
 
     }
