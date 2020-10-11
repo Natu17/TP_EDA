@@ -24,47 +24,42 @@ public class Controller {
     String bus= "/paradas-de-colectivo.csv";
     InputStream is = Start.class.getClass().getResourceAsStream(bus);
     Reader in = new InputStreamReader(is);
-
-            try{
-              Iterable<CSVRecord> recordsBus = CSVFormat.DEFAULT
-                      .withFirstRecordAsHeader()
+    try{
+      Iterable<CSVRecord> recordsBus = CSVFormat.DEFAULT
+              .withFirstRecordAsHeader()
               .parse(in);
-              for (CSVRecord record : recordsBus) {
-                map.addBusStation(record);
-              }
-
-            } catch (IOException e) {
-              e.printStackTrace();
-            }
-
+      for (CSVRecord record : recordsBus) {
+        map.addBusStation(record);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     String sub= "/estaciones-de-subte.csv";
     InputStream isSub = Start.class.getClass().getResourceAsStream(sub);
     Reader inSub = new InputStreamReader(isSub);
-   try{
-     Iterable<CSVRecord> recordsSub = CSVFormat.DEFAULT
-            .withFirstRecordAsHeader()
-            .parse(inSub);
-    for (CSVRecord record : recordsSub) {
-      map.addSubwayStation(record);
-    } } catch (IOException e) {
-    e.printStackTrace();
-  }
-
-
-
-  String places= "/espacios-culturales.csv";
+    try{
+      Iterable<CSVRecord> recordsSub = CSVFormat.DEFAULT
+              .withFirstRecordAsHeader()
+              .parse(inSub);
+      for (CSVRecord record : recordsSub) {
+        map.addSubwayStation(record);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    String places= "/espacios-culturales.csv";
     InputStream isEsp = Start.class.getClass().getResourceAsStream(places);
     Reader inEsp = new InputStreamReader(isEsp);
     try{
       Iterable<CSVRecord> recordsEsp = CSVFormat.DEFAULT
               .withFirstRecordAsHeader()
               .parse(inEsp);
-    for (CSVRecord record : recordsEsp) {
-      dataEsp.put(String.valueOf(record.get("establecimiento")),new PlaceLocation(record.get("establecimiento"), Double.valueOf(record.get("latitud")), Double.valueOf(record.get("longitud"))));
-    } } catch (IOException e) {
+      for (CSVRecord record : recordsEsp) {
+        dataEsp.put(String.valueOf(record.get("establecimiento")),new PlaceLocation(record.get("establecimiento"), Double.valueOf(record.get("latitud")), Double.valueOf(record.get("longitud"))));
+      }
+    } catch (IOException e) {
       e.printStackTrace();
     }
-
   }
 
   public List<BusInPath> findPath(double fromLat, double fromLng, double toLat, double toLng) {
@@ -73,7 +68,6 @@ public class Controller {
     Graph graph = map.getGraph();
     map.deleteStartEnd();
     return graph.answer(ID_START,ID_END);
-
   }
 
   public List<PlaceLocation> findPlaces(String searchTerm) {

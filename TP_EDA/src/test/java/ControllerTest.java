@@ -9,15 +9,25 @@ class ControllerTest {
 Controller controller = new Controller();
   @Test
   void testFindPath() {
-      controller.map.addStation(1,"B",-34.57457314259079,-58.48760329603265,-1); //agrego la parada del b "juan manuel de rosas"
-      controller.map.addStation(2,"B",-34.578172918809614,-58.48024331449579,-1);//ECHEVERRIA
-      controller.map.addStation(3,"B",-34.58167979014384,-58.47294770597528,-1); //los incas
-      controller.map.addStation(4,"107",-34.57488194679862,-58.48744619910095,1); //parada del 107 al lado de la primera del subte b
+    controller.map.addStation(1,"B",-34.57457314259079,-58.48760329603265,-1); //agrego la parada del b "juan manuel de rosas"
+    controller.map.addStation(2,"B",-34.578172918809614,-58.48024331449579,-1);//ECHEVERRIA
+    controller.map.addStation(3,"B",-34.58167979014384,-58.47294770597528,-1); //los incas
+    controller.map.addStation(4,"107",-34.57488194679862,-58.48744619910095,1); //parada del 107 al lado de la primera del subte
 
-    List<BusInPath> result = controller.findPath(-34.57548058966485,-58.48892596672341,-34.577370048364,-58.478997234219385); //hasta echeverria
-    Assertions.assertEquals("B", result.get(0).name);
-    Assertions.assertEquals(1, result.size());
+    controller.map.addStation(5,"130",-34.58829487351996,-58.38286818192071 ,1);
+    controller.map.addStation(6,"130",-34.59018501549182,-58.379563700414366,1);
+    controller.map.addStation(7,"131",-34.59838628851389,-58.37129094944708,1);
+    controller.map.addStation(8,"131",-34.59838628851389,-58.37129094944708,1);
+    controller.map.addStation(9,"10",-34.59328154388841,-58.37431648121588,1);
 
+    List<BusInPath> result1 = controller.findPath(-34.57548058966485,-58.48892596672341,-34.59838628851389,-58.37129094944708); //hasta echeverria
+    Assertions.assertEquals("B", result1.get(0).name);
+    Assertions.assertEquals(1, result1.size());
+
+    List<BusInPath> result2 = controller.findPath(-34.589522142255866,-58.38350523026747,-34.60289042752862,-58.36984833413341);
+    Assertions.assertEquals("130", result2.get(0).name);
+    //Assertions.assertEquals("131", result2.get(1).name);
+    Assertions.assertEquals(2, result2.size());
     //SEGU AGREGA MAS ESTACIONES Y PROBA MAS CAMINOS (LAS ESTACIONES LA SAQUE A MANO DEL MAPA NO DEL EXCEL NO TE COMPLIQUES)
   }
 
