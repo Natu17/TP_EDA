@@ -37,35 +37,31 @@ Controller controller = new Controller();
 
   @Test
   void testPlaceLocation() {
+    List<PlaceLocation> result;
 
-    controller.dataEsp.put("hospital aleman", new PlaceLocation("hospital aleman", -34.591806, -58.402139));
-    controller.dataEsp.put("hospital alemania", new PlaceLocation("hospital alemania", -34.6543773, -58.5324));
-    controller.dataEsp.put("hospital italiano", new PlaceLocation("hospital italiano", -34.606583, -58.425));
-    controller.dataEsp.put("hospital italienne", new PlaceLocation("hospital italienne", -34.604545, -58.44357));
-    controller.dataEsp.put("hospital español", new PlaceLocation("hospital español", -34.654764, -58.32525));
-    controller.dataEsp.put("hospital españa", new PlaceLocation("hospital españa", -34.654567, -58.323));
+    //Busco en el csv de espacios culturales ingresando una sola palabra
+    result = controller.findPlaces("crematorio");
+    Assertions.assertEquals("CREMATORIO MUNICIPAL", result.get(0).getName());
+    Assertions.assertEquals("ARCHIVO HISTORICO DEL CREMATORIO MUNICIPAL", result.get(1).getName());
 
-    List<PlaceLocation> result = controller.findPlaces("hospital italiano");
+    result = controller.findPlaces("chacabuco");
+    Assertions.assertEquals("PARQUE CHACABUCO", result.get(0).getName());
 
+    result = controller.findPlaces("boveda");
+    Assertions.assertEquals("BOVEDA QUE GUARDA LOS RESTOS DE CARLOS GARDEL", result.get(0).getName());
 
-    Assertions.assertEquals("hospital italiano", result.get(0).getName());
-    Assertions.assertEquals("hospital italienne", result.get(1).getName());
+    result = controller.findPlaces("francaise");
+    Assertions.assertEquals("PANTEON DE LA SOCIETE FRANCAISE DE SECOURS MUTUELS DE BUENOS AIRES", result.get(0).getName());
 
-    result =  controller.findPlaces("hospital aleman");
+    //Busco en el csv de espacios culturales ingresando un termino mal escrito
+    result = controller.findPlaces("chacavuco");
+    Assertions.assertEquals("PARQUE CHACABUCO", result.get(0).getName());
 
-    Assertions.assertEquals("hospital aleman", result.get(0).getName());
-    Assertions.assertEquals("hospital alemania", result.get(1).getName());
+    result = controller.findPlaces("saleziano");
+    Assertions.assertEquals("PANTEON DE LOS PADRES SALESIANOS", result.get(0).getName());
 
-    result = controller.findPlaces("hospital español");
-
-    Assertions.assertEquals("hospital español", result.get(0).getName());
-    Assertions.assertEquals("hospital españa", result.get(1).getName());
-
-    //Busco un lugar mal escrito
-    result =  controller.findPlaces("hospital espanol");
-
-    Assertions.assertEquals("hospital español", result.get(0).getName());
-    Assertions.assertEquals("hospital españa", result.get(1).getName());
+    result = controller.findPlaces("rodnei");
+    Assertions.assertEquals("BAR RODNEY", result.get(0).getName());
   }
 
 }

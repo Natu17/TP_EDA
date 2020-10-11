@@ -14,6 +14,7 @@ class GraphTest {
     Graph testGraph1 = new Graph();
     Graph testGraph2 = new Graph();
     Graph testGraph3 = new Graph();
+    Graph testGraph4 = new Graph();
 
     public void graphFiller1() {
         testGraph1.addNode(new Node(0, new Pair<>("start", 0), 0, 0, new HashSet<>()));
@@ -70,6 +71,18 @@ class GraphTest {
         testGraph3.addEdge(6, 7, 1);
     }
 
+    public void graphFiller4() {
+        testGraph4.addNode(new Node(0, new Pair<>("start", 0), 0, 0, new HashSet<>()));
+        testGraph4.addNode(new Node(1,new Pair<>("A", 0), 1, 0, new HashSet<>()));
+        testGraph4.addNode(new Node(2,new Pair<>("A", 0), 2, 0, new HashSet<>()));
+        testGraph4.addNode(new Node(3,new Pair<>("A", 0), 3, 0, new HashSet<>()));
+        testGraph4.addNode(new Node(4,  new Pair<>("B", 0), 4, 0, new HashSet<>()));
+
+        testGraph4.addEdge(0, 1, 2);
+        testGraph4.addEdge(1, 2, 1);
+        testGraph4.addEdge(2, 3, 2);
+    }
+
     //Analizo si toma el camino más corto y si elimina las estaciones del medio de un misma linea
     @Test
     public void testSmallerDistances1() {
@@ -97,5 +110,16 @@ class GraphTest {
         }
         Assertions.assertEquals("A", myAnswer.get(0).name);
         Assertions.assertEquals("C", myAnswer.get(1).name);
+    }
+
+    //veo que si no hay camino me retorna un camino vacío
+    @Test
+    public void testSmallerDistances4() {
+        graphFiller4();
+        List<BusInPath> myAnswer = testGraph4.answer(0, 7);
+        for (BusInPath busInPath : myAnswer) {
+            System.out.println(busInPath.name);
+        }
+        Assertions.assertEquals(0, myAnswer.size());
     }
 }
