@@ -82,6 +82,9 @@ final static private long NO_PARENT = -3;
                found = true;
             }else {
                 Node endPath = nodes.get(ans.get(target));
+                if(endPath == null){
+                    found = true;
+                }
                 target = ans.get(target);
                 if(target == idStart)
                     found = true;
