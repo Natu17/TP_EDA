@@ -6,9 +6,9 @@ import java.util.*;
 
 public class Index {
 
-    SortedMap<String, PlaceLocation> index;
+    Map<String, PlaceLocation> index;
     public Index() {
-        index =new TreeMap<>(Comparator.naturalOrder());
+        index =new HashMap<>();
     }
 
 

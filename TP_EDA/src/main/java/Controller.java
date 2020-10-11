@@ -11,8 +11,8 @@ import java.util.List;
 
 
 public class Controller {
-  private Index dataEsp = new Index();
-  private CreateMap map = new CreateMap();
+  public Index dataEsp = new Index();
+  public CreateMap map = new CreateMap();
 
   final static long ID_START = -1;
   final static  long ID_END = -2;
@@ -77,7 +77,6 @@ public class Controller {
   }
 
   public List<PlaceLocation> findPlaces(String searchTerm) {
-    System.out.println(searchTerm);
     return dataEsp.search(searchTerm);
   }
 }

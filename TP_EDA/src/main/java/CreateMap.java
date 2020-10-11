@@ -55,7 +55,7 @@ public class CreateMap {
         addStation(((long) Double.parseDouble(record.get("id"))), record.get("linea"), Double.valueOf(record.get("lat")), Double.valueOf(record.get("long")), -1);
     }
 
-    private void addStation(long id, String lineName, double lat, double lng, int direction) {
+    public void addStation(long id, String lineName, double lat, double lng, int direction) {
         Node node = new Node(id, new Pair<>(lineName,direction), lat, lng, new HashSet<>());
         graph.addNode(node);
         if (lat < TOP_LEFT_LAT && lng > TOP_LEFT_LNG && lat > BOTTOM_RIGHT_LAT && lng < BOTTOM_RIGHT_LNG) {
@@ -120,17 +120,6 @@ public class CreateMap {
                             Node current = it.next();
                             if(!current.name.equals(node.name)) {
                                 double dist = distanceNormalize(current.lat, node.lat, current.lng, node.lng);
-                            /*
-                            if (node.name.equals(current.name) == true) {
-                                if (current.name.getValue() == -1) {
-                                    dist = distanceNormalize(current.lat, node.lat, current.lng, node.lng);
-                                    graph.addEdge(node.id, current.id, dist / V_SUBWAY);
-                                } else
-                                    dist = distanceNormalize(current.lat, node.lat, current.lng, node.lng);
-                                    graph.addEdge(node.id, current.id, dist / V_BUS);
-                            } else {
-
-                             */
 
                                 if (current.name.getValue() == -1 && node.name.getValue() == -1 || node.name.getValue() == DIRECTION_START && current.name.getValue() == -1) { // los dos son subtes diferentes, estoy caminado de uno al otro
                                     graph.addEdge(node.id, current.id, dist / V_PERSON + T_SUBWAY);
