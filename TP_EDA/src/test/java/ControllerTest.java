@@ -9,26 +9,30 @@ class ControllerTest {
 Controller controller = new Controller();
   @Test
   void testFindPath() {
-    controller.map.addStation(1,"B",-34.57457314259079,-58.48760329603265,-1); //agrego la parada del b "juan manuel de rosas"
-    controller.map.addStation(2,"B",-34.578172918809614,-58.48024331449579,-1);//ECHEVERRIA
-    controller.map.addStation(3,"B",-34.58167979014384,-58.47294770597528,-1); //los incas
-    controller.map.addStation(4,"107",-34.57488194679862,-58.48744619910095,1); //parada del 107 al lado de la primera del subte
-
-    controller.map.addStation(5,"130",-34.58829487351996,-58.38286818192071 ,1);
-    controller.map.addStation(6,"130",-34.59018501549182,-58.379563700414366,1);
-    controller.map.addStation(7,"131",-34.59838628851389,-58.37129094944708,1);
-    controller.map.addStation(8,"131",-34.59838628851389,-58.37129094944708,1);
-    controller.map.addStation(9,"10",-34.59328154388841,-58.37431648121588,1);
-
+    //Busco paradas cercanas a un trayecto directo para ver i me lo devuelve bien
     List<BusInPath> result1 = controller.findPath(-34.57548058966485,-58.48892596672341,-34.59838628851389,-58.37129094944708); //hasta echeverria
     Assertions.assertEquals("B", result1.get(0).name);
     Assertions.assertEquals(1, result1.size());
 
-    List<BusInPath> result2 = controller.findPath(-34.589522142255866,-58.38350523026747,-34.60289042752862,-58.36984833413341);
-    Assertions.assertEquals("130", result2.get(0).name);
-    //Assertions.assertEquals("131", result2.get(1).name);
-    Assertions.assertEquals(2, result2.size());
-    //SEGU AGREGA MAS ESTACIONES Y PROBA MAS CAMINOS (LAS ESTACIONES LA SAQUE A MANO DEL MAPA NO DEL EXCEL NO TE COMPLIQUES)
+    //Busco paradas cercanas a un trayecto directo para ver i me lo devuelve bien
+    List<BusInPath> result2 = controller.findPath(-34.58767237715098,-58.38345455986495,-34.60301957329089,-58.36898285104609);
+    Assertions.assertEquals("130A", result2.get(0).name);
+    Assertions.assertEquals(1, result2.size());
+
+    //Busco paradas de un recorrido conocido a ver si lo devuelve bien
+    List<BusInPath> result3 = controller.findPath(-34.625502643245035,-58.44838547569747,-34.60301957329089,-58.36898285104609);
+    Assertions.assertEquals("A", result3.get(0).name);
+    Assertions.assertEquals("E", result3.get(1).name);
+    Assertions.assertEquals(2, result3.size());
+
+    //Busco paradas cercanas a un trayecto directo para ver i me lo devuelve bien
+    List<BusInPath> result4 = controller.findPath(-34.59576732577009,-58.386404777906996,-34.590821401232894,-58.40807702674733);
+    Assertions.assertEquals("152A", result4.get(0).name);
+    Assertions.assertEquals(1, result4.size());
+
+    //Busco paradas muy cercanas, dond el mejor camino es caminar, y por ende el resullt% deberìa estar vacìo
+    List<BusInPath> result5 = controller.findPath(-34.5945308722412,-58.402927185438735,-34.59474283701035,-58.40108182563649);
+    Assertions.assertEquals(0, result5.size());
   }
 
   @Test
