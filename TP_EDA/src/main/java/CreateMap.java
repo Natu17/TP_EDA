@@ -26,7 +26,7 @@ public class CreateMap {
     private int columnStart;
     private int columnEnd;
 
-
+    @SuppressWarnings("unchecked")
     public CreateMap() {
         double height = distanceNormalize(TOP_LEFT_LAT, BOTTOM_RIGHT_LAT, TOP_LEFT_LNG, TOP_LEFT_LNG);
         double width = distanceNormalize(BOTTOM_RIGHT_LAT, BOTTOM_RIGHT_LAT, TOP_LEFT_LNG, BOTTOM_RIGHT_LNG);
@@ -80,12 +80,11 @@ public class CreateMap {
           graph.addLine(node);
 
         }
-        }
+    }
 
-        public void deleteStartEnd(){
-
-                city[rowStart][columnStart].remove( city[rowStart][columnStart].size() - 1);
-                city[rowEnd][columnEnd].remove( city[rowEnd][columnEnd].size() - 1);
+    public void deleteStartEnd(){
+        city[rowStart][columnStart].remove( city[rowStart][columnStart].size() - 1);
+        city[rowEnd][columnEnd].remove( city[rowEnd][columnEnd].size() - 1);
     }
 
     private void addCost(Node node, int row, int column) {
@@ -100,11 +99,7 @@ public class CreateMap {
                     graph.addEdge(node.id, current.id, dist / V_SUBWAY);
                 } else graph.addEdge(node.id, current.id, dist / V_BUS);
             }
-
-
-
         }
-
 
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = column - 1; j <= column + 1; j++) {
@@ -113,8 +108,6 @@ public class CreateMap {
                         city[i][j] = new ArrayList<>();
 
                     } else {
-
-
                         Iterator<Node> it = city[i][j].iterator();
                         while (it.hasNext()) {
                             Node current = it.next();
@@ -132,14 +125,16 @@ public class CreateMap {
                                         graph.addEdge(node.id, current.id, dist / V_PERSON);
                                 }
                             }
-                            }
+
                         }
 
                     }
-                }
 
+
+                }
             }
         }
+    }
 
     private double ToGrads(double number){
         return (Math.PI / 180)*number;
@@ -147,11 +142,8 @@ public class CreateMap {
 
     private double distanceNormalize (double lat1, double lat2, double lng1, double lng2)
     {
-        double difLatitud = lat1 - lat2;
         //coloca ela diferencia en radianes
         double difLongitud = lng1 - lng2;
-
-
 
         // Calculating distance
        double result = Math.acos(Math.sin(ToGrads(lat1)) *Math.sin(ToGrads(lat2)) +
@@ -159,11 +151,6 @@ public class CreateMap {
                        Math.cos(ToGrads(difLongitud)))*RADIO_TIERRA;
 
        return result;
-
-
-
     }
-
-
 
 }

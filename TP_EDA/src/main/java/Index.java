@@ -1,6 +1,4 @@
 import model.PlaceLocation;
-import org.apache.commons.collections.iterators.IteratorEnumeration;
-import org.apache.commons.csv.CSVRecord;
 
 import java.util.*;
 
@@ -46,7 +44,7 @@ public class Index {
     }
 
 
-    public double similarytyWhite(String str1, String str2) {
+    public double similarityWhite(String str1, String str2) {
         Scanner scanner2 = new Scanner(str2.toLowerCase());
         double distance = 0.0;
         String str2B = str2;
@@ -111,7 +109,7 @@ public class Index {
     public List<PlaceLocation> search(String str1){
         Queue<PlaceLocation> results = new PriorityQueue<>();
         for(Map.Entry<String,PlaceLocation> entry: index.entrySet()){
-            Double similarity = similarytyWhite(str1,entry.getKey());
+            Double similarity = similarityWhite(str1,entry.getKey());
             if(results.size() < 10){
                 PlaceLocation placeLocation = entry.getValue();
                 placeLocation.similarity(similarity);
