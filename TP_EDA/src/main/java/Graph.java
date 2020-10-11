@@ -40,7 +40,7 @@ final static private long NO_PARENT = -3;
         queue.add(new PqNode(nodes.get(startId), 0)); //agrego primer nodo
         parents.put(startId, NO_PARENT);
         PqNode pqNode = new PqNode(nodes.get(startId), 0);
-        while (!queue.isEmpty() && pqNode.node.id != endId) { //ESTOY HACIENDO UN WHILE DE MAS
+        while (!queue.isEmpty() && pqNode.node.id != endId) {
             pqNode = queue.remove();
             if (pqNode.node.marked) continue;
             pqNode.node.mark();

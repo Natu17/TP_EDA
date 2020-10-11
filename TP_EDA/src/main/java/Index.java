@@ -37,7 +37,7 @@ public class Index {
             }
             string[lenght1 - 1] = value;
         }
-        return value = string[lenght1 - 1];
+        return string[lenght1 - 1];
     }
     public double normalizedSimilarity(String str1,String str2){
         return (1 - (double)(distance(str1,str2))/Math.max(str1.length(),str2.length()));
@@ -80,28 +80,6 @@ public class Index {
 
     }
 
-  /*
-
-                if (normalizeDistance >= 0.8) {
-                    distance = distance + normalizeDistance *Math.pow(str1A.length(),3);
-                    ponderation = ponderation + Math.pow(str1A.length(),3);
-                } else {
-                    distance = distance + normalizeDistance * (str1A.length());
-                    ponderation = ponderation + str1A.length();
-                }
-            }
-        }
-            normalizeDistance = normalizedSimilarity(str1, str2);
-        if (normalizeDistance >= 0.8) {
-            distance = distance +  normalizeDistance*Math.pow(str1.length(),3);
-            ponderation = ponderation + Math.pow(str1.length(),3);
-        }else {
-            distance = distance + normalizeDistance * (str1.length());
-            ponderation = ponderation + str1.length();
-        }
-
- */
-
     public void put(String str, PlaceLocation placeLocation){
         index.put(str,placeLocation);
     }
@@ -109,7 +87,7 @@ public class Index {
     public List<PlaceLocation> search(String str1){
         Queue<PlaceLocation> results = new PriorityQueue<>();
         for(Map.Entry<String,PlaceLocation> entry: index.entrySet()){
-            Double similarity = similarityWhite(str1,entry.getKey());
+            double similarity = similarityWhite(str1,entry.getKey());
             if(results.size() < 10){
                 PlaceLocation placeLocation = entry.getValue();
                 placeLocation.similarity(similarity);

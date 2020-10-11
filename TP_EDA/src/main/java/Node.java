@@ -6,9 +6,7 @@ import java.util.Set;
 
 public class Node {
     long id;
-    //String name;
     Pair<String,Integer> name;
-    //int direction;
     Set<Graph.Edge> edges;
     double lat;
     double lng;
@@ -20,7 +18,6 @@ public class Node {
         this.lat = lat;
         this.name = name;
         this.id = id;
-        //this.direction = direction;
         edges = set;
     }
 
@@ -29,7 +26,6 @@ public class Node {
         this.lat = lat;
         this.name = name;
         this.id = id;
-        //this.direction = direction;
         edges = new HashSet<>();
     }
 

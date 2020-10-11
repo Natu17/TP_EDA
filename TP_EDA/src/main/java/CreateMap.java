@@ -33,8 +33,6 @@ public class CreateMap {
         int rows = (int) (height/0.5 + 1);
         int columns = (int) (width/0.5 + 1);
         city = new List[rows][columns];
-        System.out.println(rows);
-        System.out.println(columns);
     }
 
 
@@ -146,11 +144,9 @@ public class CreateMap {
         double difLongitud = lng1 - lng2;
 
         // Calculating distance
-       double result = Math.acos(Math.sin(ToGrads(lat1)) *Math.sin(ToGrads(lat2)) +
+       return Math.acos(Math.sin(ToGrads(lat1)) *Math.sin(ToGrads(lat2)) +
                Math.cos(ToGrads(lat1)) * Math.cos(ToGrads(lat2)) *
                        Math.cos(ToGrads(difLongitud)))*RADIO_TIERRA;
-
-       return result;
     }
 
 }
