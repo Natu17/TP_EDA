@@ -20,7 +20,7 @@ class CreateMapTest {
         map.addStation(7,"107",-34.58170350348671,-58.49892568065003,1);
         map.addStation(8,"B",-34.60294005384535,-58.36938661922946,-1);//ultima parada del B (a mas de 500 m a la redonda)
         map.addStation(9,"107",-34.59857497382793,-58.51108875625667,1);
-
+        map.addStation(9,"107",-34.59857497382793,-58.51108875625667,1); //mismo id
         map.addStation(10,"AFUERA",-34.45187918186737,-59.01614428431844,1); //agrego una station por fuera del cuadrado
 
         map.addWalkingStation(-1, -34.575047441959605, -58.48720913923434, -3);
@@ -51,9 +51,44 @@ class CreateMapTest {
         map.deleteStartEnd();
         map.addWalkingStation(-1, -34.554944332607654,-58.43693015875787, -3);
         map.addWalkingStation(-2,-34.579611018734546, -58.47787139716119, -4);
-        List<BusInPath> result4 = map.graph.answer(-1, -2); //desde el itba hasta la plaza devoto
+        List<BusInPath> result4 = map.graph.answer(-1, -2);
         Assertions.assertEquals(0, result4.size());//no hay ningún medio de transporte cercano
-            }
+
+        map.deleteStartEnd();
+        map.addWalkingStation(-1, -34.859934458448315,-58.85690493217952, -3);
+        map.addWalkingStation(-2,-34.549781295220896, -58.787451722167965, -4);
+        List<BusInPath> result5 = map.graph.answer(-1, -2);
+        Assertions.assertEquals(0, result5.size());//DOS PUNTOS POR FUERA DEL MAPA
+
+        map.deleteStartEnd();
+        map.addWalkingStation(-1, -34.554944332607654,-58.43693015875787, -3);
+        map.addWalkingStation(-2,-34.549781295220896, -58.787451722167965, -4);//POR FUERA DEL MAPA
+        List<BusInPath> result6 = map.graph.answer(-1, -2);
+        Assertions.assertEquals(0, result6.size());
+
+        map.deleteStartEnd();
+        map.addWalkingStation(-1, -34.859934458448315,-58.85690493217952, -3);//POR FUERA DEL MAPA
+        map.addWalkingStation(-2,-34.579611018734546, -58.47787139716119, -4);
+        List<BusInPath> result7 = map.graph.answer(-1, -2);
+        Assertions.assertEquals(0, result7.size());
+
+
+        map.deleteStartEnd();
+        map.addWalkingStation(-1, -34.57756163015424,-58.4919225383002, -3);
+        map.addWalkingStation(-1, -34.57756163015424,-58.4919225383002, -4); //misma latitud y longitud
+        List<BusInPath> result8 = map.graph.answer(-1, -2);
+        Assertions.assertEquals(0, result8.size());
+
+        map.deleteStartEnd();
+        map.addWalkingStation(-1, -34.57756163015424,5.00, -3); //NO EXISTE
+        map.addWalkingStation(-1, -34.57756163015424,-58.4919225383002, -4);
+        List<BusInPath> result9 = map.graph.answer(-1, -2);
+        Assertions.assertEquals(0, result9.size());
+
+
+
+
+    }
 
 
 }

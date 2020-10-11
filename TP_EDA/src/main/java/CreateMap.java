@@ -28,6 +28,10 @@ public class CreateMap {
 
     @SuppressWarnings("unchecked")
     public CreateMap() {
+        rowStart = -1;
+        rowEnd = -1;
+        columnEnd = -1;
+        columnStart = -1;
         double height = distanceNormalize(TOP_LEFT_LAT, BOTTOM_RIGHT_LAT, TOP_LEFT_LNG, TOP_LEFT_LNG);
         double width = distanceNormalize(BOTTOM_RIGHT_LAT, BOTTOM_RIGHT_LAT, TOP_LEFT_LNG, BOTTOM_RIGHT_LNG);
         int rows = (int) (height/0.5 + 1);
@@ -81,8 +85,14 @@ public class CreateMap {
     }
 
     public void deleteStartEnd(){
-        city[rowStart][columnStart].remove( city[rowStart][columnStart].size() - 1);
-        city[rowEnd][columnEnd].remove( city[rowEnd][columnEnd].size() - 1);
+        if(columnEnd != -1 && columnStart !=-1 && rowStart !=-1 && rowEnd != -1) {
+            city[rowStart][columnStart].remove(city[rowStart][columnStart].size() - 1);
+            city[rowEnd][columnEnd].remove(city[rowEnd][columnEnd].size() - 1);
+            rowStart =-1;
+            rowEnd = -1;
+            columnStart = -1;
+            columnEnd = -1;
+        }
     }
 
     private void addCost(Node node, int row, int column) {
