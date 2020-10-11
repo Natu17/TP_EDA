@@ -70,37 +70,39 @@ final static private long NO_PARENT = -3;
     }
 
 
-    public List<BusInPath> answer(long idStart, long idEnd){
+    public List<BusInPath> answer(long idStart, long idEnd) {
         Map<Long, Long> ans = getSmallerDistance(idStart, idEnd);
         List<BusInPath> result = new ArrayList<>();
-        long target =idEnd;
+        long target = idEnd;
 
         boolean found = false;
-        while(!found){
+        while (!found) {
 
-            if(target == idStart) {
-               found = true;
-            }else {
+            if (target == idStart) {
+                found = true;
+            } else {
                 Node endPath = nodes.get(ans.get(target));
-                if(endPath == null){
+                if (endPath == null) {
                     found = true;
-                }
-                target = ans.get(target);
-                if(target == idStart)
-                    found = true;
-                else {
-                    Node startPath = nodes.get(ans.get(target));
-                    if (endPath.name.equals(startPath.name)) {
-                        result.add(new BusInPath(endPath.name.getKey(), startPath.lat, startPath.lng, endPath.lat, endPath.lng));
-                        target = ans.get(target);
+                } else {
+                    target = ans.get(target);
+                    if (target == idStart)
+                        found = true;
+                    else {
+                        Node startPath = nodes.get(ans.get(target));
+                        if (endPath.name.equals(startPath.name)) {
+                            result.add(new BusInPath(endPath.name.getKey(), startPath.lat, startPath.lng, endPath.lat, endPath.lng));
+                            target = ans.get(target);
+                        }
+
                     }
                 }
             }
         }
-        Collections.reverse(result);
-        return result;
+            Collections.reverse(result);
+            return result;
 
-    }
+        }
 
     public void addNode(Node node) {
         nodes.put(node.id, node);
