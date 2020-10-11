@@ -30,7 +30,7 @@ Controller controller = new Controller();
     Assertions.assertEquals("152A", result4.get(0).name);
     Assertions.assertEquals(1, result4.size());
 
-    //Busco paradas muy cercanas, dond el mejor camino es caminar, y por ende el resullt% deberìa estar vacìo
+    //Busco paradas muy cercanas, dond el mejor camino es caminar, y por ende el resullt deberìa estar vacìo
     List<BusInPath> result5 = controller.findPath(-34.5945308722412,-58.402927185438735,-34.59474283701035,-58.40108182563649);
     Assertions.assertEquals(0, result5.size());
   }
